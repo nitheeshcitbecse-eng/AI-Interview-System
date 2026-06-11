@@ -1,80 +1,90 @@
-export default function ReportCard(){
+export default function ReportCard({report}){
+
 
 return(
 
 <div className="report">
 
 
-<h2>
-🏆 Interview Report
-</h2>
+<h2>🏆 Interview Report</h2>
 
 
 <div className="circle">
-87
+
+{report.overall || "--"}
+
 </div>
 
 
+
 <h3>
-Excellent Performance
+
+{
+report.overall>80
+?"Excellent Performance ⭐"
+:
+report.overall>60
+?"Good Performance 👍"
+:
+"Needs Improvement ⚠️"
+
+}
+
 </h3>
 
 
 
-<div className="bars">
-
-<p>
-Technical Skills
-<span style={{width:"85%"}}></span>
-</p>
+<h4>
+Technical: {report.technical}%
+</h4>
 
 
-<p>
-Communication
-<span style={{width:"90%"}}></span>
-</p>
+<h4>
+Communication: {report.communication}%
+</h4>
 
 
-<p>
-Confidence
-<span style={{width:"80%"}}></span>
-</p>
+<h4>
+Confidence: {report.confidence}%
+</h4>
 
 
-
-</div>
+<h4>
+Clarity: {report.clarity}%
+</h4>
 
 
 
-<div className="feedback">
+<hr/>
+
 
 <h3>
 Strengths
 </h3>
 
-<p>
-✔ Good explanation ability</p>
 
-<p>
-✔ Problem solving</p>
+{
+report.strengths.map((s,i)=>
+<p key={i}>✔ {s}</p>
+)
+}
+
 
 
 <h3>
-Improve
+Areas To Improve
 </h3>
 
-<p>
-⚠ Give more examples</p>
 
-<p>
-⚠ Explain projects deeper</p>
+{
+report.improve.map((s,i)=>
+<p key={i}>⚠ {s}</p>
+)
+}
+
 
 
 </div>
-
-
-</div>
-
 
 )
 

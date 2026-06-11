@@ -1,8 +1,8 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import "../App.css";
 
 
-export default function AIAvatar(){
+export default function AIAvatar({setReport}){
 
 
 const user=localStorage.getItem("user");
@@ -12,75 +12,75 @@ const questions=[
 
 "Tell me about yourself.",
 
-"Why did you choose this career field?",
+"Why did you choose this field?",
 
-"What technical skills do you have?",
+"What are your technical skills?",
 
-"Explain your latest project.",
+"Explain your project.",
 
-"What challenges did you face in your project?",
+"What challenges did you face?",
 
-"How do you handle pressure?",
-
-"Where do you see yourself in five years?"
+"Why should we hire you?"
 
 ];
 
 
-const [index,setIndex]=useState(0);
+const [current,setCurrent]=useState(0);
 
-const [chat,setChat]=useState(
-[
+
+const [chat,setChat]=useState([
 {
-ai:`Hi ${user} 👋. Let's start your interview. ${questions[0]}`
+ai:`Hi ${user} 👋. Welcome to your AI interview. ${questions[0]}`
 }
-]
-);
+]);
 
 
 const [listening,setListening]=useState(false);
 
 
-const [answers,setAnswers]=useState({
 
-confidence:70,
-technical:70,
-communication:70,
-clarity:70
+let scores={
+communication:50,
+technical:50,
+confidence:50,
+clarity:50
+};
 
-});
+
+
+useEffect(()=>{
+
+speak(
+`Hi ${user}. ${questions[0]}`
+);
+
+},[]);
+
 
 
 
 function speak(text){
 
+
 let speech=new SpeechSynthesisUtterance(text);
 
 speech.rate=0.9;
 
+speech.pitch=1;
+
+
+window.speechSynthesis.cancel();
+
 window.speechSynthesis.speak(speech);
 
-}
-
-
-
-function startInterview(){
-
-
-speak(
-questions[index]
-);
-
-
-listen();
-
 
 }
 
 
 
 
-function listen(){
+
+function startListening(){
 
 
 let SpeechRecognition =
@@ -88,20 +88,21 @@ window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
 
+
 if(!SpeechRecognition){
 
-alert("Use Chrome browser");
+alert("Please use Chrome");
 
 return;
 
 }
 
 
+
 let recognition=new SpeechRecognition();
 
 
 recognition.lang="en-US";
-
 
 recognition.start();
 
@@ -110,10 +111,11 @@ setListening(true);
 
 
 
-recognition.onresult=(e)=>{
+recognition.onresult=(event)=>{
 
 
-let answer=e.results[0][0].transcript;
+let answer =
+event.results[0][0].transcript;
 
 
 
@@ -136,7 +138,17 @@ analyzeAnswer(answer);
 };
 
 
+
+recognition.onend=()=>{
+
+setListening(false);
+
+};
+
+
 }
+
+
 
 
 
@@ -147,89 +159,184 @@ let text=answer.toLowerCase();
 
 
 
-let newScore={...score};
+// communication
+
+if(answer.length>70)
+scores.communication+=20;
+
+else
+scores.communication-=5;
 
 
 
-if(answer.length>40){
+// technical detection
 
-newScore.communication+=8;
 
-newScore.clarity+=5;
+let tech=[
+
+"java",
+"python",
+"react",
+"ai",
+"machine learning",
+"sql",
+"database",
+"algorithm"
+
+];
+
+
+tech.forEach(word=>{
+
+if(text.includes(word)){
+
+scores.technical+=8;
 
 }
+
+});
+
+
+
+
+// confidence
+
+if(
+text.includes("created") ||
+text.includes("developed") ||
+text.includes("built")
+){
+
+scores.confidence+=10;
+
+}
+
+else{
+
+scores.confidence-=5;
+
+}
+
+
+
+
+scores.clarity =
+Math.min(
+90,
+scores.communication
+);
+
+
+
+
+
+let total=Math.round(
+
+(
+scores.communication+
+scores.technical+
+scores.confidence+
+scores.clarity
+
+)/4
+
+);
+
+
+
+
+
+setReport({
+
+overall:total,
+
+communication:
+scores.communication,
+
+technical:
+scores.technical,
+
+confidence:
+scores.confidence,
+
+clarity:
+scores.clarity,
+
+strengths:
+
+total>70
+?
+["Good explanation","Good confidence"]
+:
+[],
+
+improve:
+
+total<70
+?
+["Explain with more details","Improve technical depth"]
+:
+[]
+
+});
+
+
+
+
+
+let nextQuestion;
+
 
 
 if(
-text.includes("python") ||
-text.includes("java") ||
-text.includes("react") ||
-text.includes("machine")
+text.includes("project")
 ){
 
-newScore.technical+=10;
+nextQuestion=
+"Interesting. What technologies did you use in your project?";
 
 }
 
+else if(
+text.includes("skill")
+){
 
-
-newScore.confidence+=5;
-
-
-
-setScore(newScore);
-
-
-
-let followUp="";
-
-
-if(text.includes("project")){
-
-
-followUp=
-"Great. Can you explain what technologies you used in that project?";
-
+nextQuestion=
+"Which skill are you strongest in and why?";
 
 }
 
-else if(text.includes("skill")){
+else if(
+text.includes("java")
+||
+text.includes("python")
+){
 
-
-followUp=
-"Nice. Which skill are you most confident about and why?";
-
-
-}
-
-else if(text.includes("ai")){
-
-
-followUp=
-"Interesting. Explain one real world application of AI.";
-
+nextQuestion=
+"Can you explain one concept from that technology?";
 
 }
 
 else{
 
 
-followUp=
-questions[index+1] ||
+let next=current+1;
+
+
+nextQuestion=
+questions[next] ||
 "Tell me more about your experience.";
+
+
+setCurrent(next);
+
 
 }
 
 
 
+
 setTimeout(()=>{
-
-
-let next=index+1;
-
-
-setIndex(next);
-
 
 
 setChat(prev=>[
@@ -237,17 +344,17 @@ setChat(prev=>[
 ...prev,
 
 {
-ai:followUp
+ai:nextQuestion
 }
 
 ]);
 
 
-speak(followUp);
+speak(nextQuestion);
 
 
 
-},1500);
+},1200);
 
 
 
@@ -263,9 +370,15 @@ return(
 <div className="interview">
 
 
+
 <div className="avatar">
 
-<img src="/src/assets/hero.png"/>
+
+<img
+src="/src/assets/hero.png"
+alt="AI"
+/>
+
 
 </div>
 
@@ -274,40 +387,55 @@ return(
 <div className="chat">
 
 
+
 <h2>
 🤖 AI Interviewer
 </h2>
+
 
 
 <div className="messages">
 
 
 {
-chat.map((c,i)=>(
+
+chat.map((item,i)=>(
+
 
 <div key={i}>
 
 
 {
-c.ai &&
+item.ai &&
+
 <p className="ai">
-AI: {c.ai}
+
+🤖 {item.ai}
+
 </p>
+
 }
+
 
 
 {
-c.user &&
+item.user &&
+
 <p className="user">
-You: {c.user}
+
+You: {item.user}
+
 </p>
+
 }
+
 
 
 </div>
 
 
 ))
+
 }
 
 
@@ -315,61 +443,52 @@ You: {c.user}
 
 
 
-<button onClick={startInterview}>
+
+<button onClick={startListening}>
 
 🎤 Speak Answer
 
 </button>
 
 
+
+<button
+onClick={()=>
+speak(
+questions[current]
+)
+}
+>
+
+🔊 Repeat Question
+
+</button>
+
+
+
+
 {
+
 listening &&
-<p>
-Listening...
-</p>
+
+<h3>
+
+🎙 Listening...
+
+</h3>
+
 }
 
 
 
 
-<div className="liveScore">
-
-
-<h3>
-Live Analysis
-</h3>
-
-
-<p>
-Confidence {score.confidence}%
-</p>
-
-
-<p>
-Communication {score.communication}%
-</p>
-
-
-<p>
-Technical {score.technical}%
-</p>
-
-
-<p>
-Clarity {score.clarity}%
-</p>
-
-
 </div>
 
-
-</div>
 
 
 </div>
 
 
 )
-
 
 }
