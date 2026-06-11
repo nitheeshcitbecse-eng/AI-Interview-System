@@ -2,45 +2,75 @@ export default function ReportCard(){
 
 return(
 
-<div className="card">
+<div className="report">
 
 
 <h2>
-Interview Report Card
+🏆 Interview Report
 </h2>
 
 
-<h1 className="big">
+<div className="circle">
 87
-</h1>
+</div>
 
 
-<p>
-Excellent Performance ⭐⭐⭐⭐⭐
-</p>
+<h3>
+Excellent Performance
+</h3>
 
 
-<hr/>
 
-
-<p>
-✔ Good Technical Knowledge
-</p>
-
+<div className="bars">
 
 <p>
-✔ Clear Communication
+Technical Skills
+<span style={{width:"85%"}}></span>
 </p>
 
 
 <p>
-⚠ Improve Real Examples
+Communication
+<span style={{width:"90%"}}></span>
 </p>
 
 
-<button>
-Download Report
-</button>
+<p>
+Confidence
+<span style={{width:"80%"}}></span>
+</p>
+
+
+
+</div>
+
+
+
+<div className="feedback">
+
+<h3>
+Strengths
+</h3>
+
+<p>
+✔ Good explanation ability</p>
+
+<p>
+✔ Problem solving</p>
+
+
+<h3>
+Improve
+</h3>
+
+<p>
+⚠ Give more examples</p>
+
+<p>
+⚠ Explain projects deeper</p>
+
+
+</div>
 
 
 </div>

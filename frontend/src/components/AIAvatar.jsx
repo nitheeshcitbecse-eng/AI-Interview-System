@@ -1,69 +1,54 @@
-import {useState,useEffect} from "react";
+import {useState} from "react";
 import "../App.css";
 
 
-function AIAvatar(){
+export default function AIAvatar(){
+
 
 const user=localStorage.getItem("user");
 
 
 const questions=[
 
-{
-q:"Tell me about yourself and your background.",
-type:"communication"
-},
+"Tell me about yourself.",
 
-{
-q:"Why did you choose Artificial Intelligence and Machine Learning?",
-type:"technical"
-},
+"Why did you choose this career field?",
 
-{
-q:"Explain your recent project.",
-type:"technical"
-},
+"What technical skills do you have?",
 
-{
-q:"What are your strengths and weaknesses?",
-type:"communication"
-},
+"Explain your latest project.",
 
-{
-q:"Where do you see yourself after 5 years?",
-type:"confidence"
-}
+"What challenges did you face in your project?",
+
+"How do you handle pressure?",
+
+"Where do you see yourself in five years?"
 
 ];
 
 
-const [current,setCurrent]=useState(0);
+const [index,setIndex]=useState(0);
 
-const [answer,setAnswer]=useState("");
-
-const [scores,setScores]=useState({
-
-confidence:70,
-communication:70,
-technical:70,
-clarity:70
-
-});
-
-
-const [status,setStatus]=useState(
-"Ready for interview"
+const [chat,setChat]=useState(
+[
+{
+ai:`Hi ${user} 👋. Let's start your interview. ${questions[0]}`
+}
+]
 );
 
 
+const [listening,setListening]=useState(false);
 
-useEffect(()=>{
 
-speak(
-`Hi ${user}. Welcome back. ${questions[0].q}`
-)
+const [score,setScore]=useState({
 
-},[]);
+confidence:70,
+technical:70,
+communication:70,
+clarity:70
+
+});
 
 
 
@@ -73,21 +58,34 @@ let speech=new SpeechSynthesisUtterance(text);
 
 speech.rate=0.9;
 
-speech.pitch=1;
-
 window.speechSynthesis.speak(speech);
 
 }
 
 
 
-function startListening(){
+function startInterview(){
 
 
-let SpeechRecognition=
+speak(
+questions[index]
+);
+
+
+listen();
+
+
+}
+
+
+
+
+function listen(){
+
+
+let SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
-
 
 
 if(!SpeechRecognition){
@@ -99,140 +97,157 @@ return;
 }
 
 
-
 let recognition=new SpeechRecognition();
 
 
 recognition.lang="en-US";
 
+
 recognition.start();
 
 
-setStatus("Listening...");
-
-
-recognition.onresult=(event)=>{
-
-
-let text =
-event.results[0][0].transcript;
+setListening(true);
 
 
 
-setAnswer(text);
+recognition.onresult=(e)=>{
 
-analyze(text);
+
+let answer=e.results[0][0].transcript;
+
+
+
+setChat(prev=>[
+
+...prev,
+
+{
+user:answer
+}
+
+]);
+
+
+
+analyzeAnswer(answer);
+
 
 
 };
 
 
-
-recognition.onend=()=>{
-
-setStatus("Processing answer...");
-
-}
-
-
 }
 
 
 
-function analyze(text){
+function analyzeAnswer(answer){
 
 
-let words=text.toLowerCase().split(" ");
-
-
-let lengthScore =
-Math.min(90,50+words.length);
-
-
-let technicalBonus =
-(
-words.includes("python") ||
-words.includes("machine") ||
-words.includes("ai") ||
-words.includes("project")
-)
-?15:0;
+let text=answer.toLowerCase();
 
 
 
-setScores(prev=>({
-
-confidence:
-Math.min(
-95,
-prev.confidence+5
-),
-
-
-communication:
-Math.min(
-95,
-prev.communication+lengthScore/10
-),
-
-
-technical:
-Math.min(
-95,
-prev.technical+technicalBonus
-),
-
-
-clarity:
-Math.min(
-95,
-prev.clarity+5
-)
-
-}));
+let newScore={...score};
 
 
 
-// next question
+if(answer.length>40){
 
-setTimeout(()=>{
+newScore.communication+=8;
 
+newScore.clarity+=5;
 
-let next =
-current+1;
-
-
-
-if(next < questions.length){
+}
 
 
-setCurrent(next);
+if(
+text.includes("python") ||
+text.includes("java") ||
+text.includes("react") ||
+text.includes("machine")
+){
 
-setAnswer("");
+newScore.technical+=10;
 
-speak(
-questions[next].q
-);
+}
+
+
+
+newScore.confidence+=5;
+
+
+
+setScore(newScore);
+
+
+
+let followUp="";
+
+
+if(text.includes("project")){
+
+
+followUp=
+"Great. Can you explain what technologies you used in that project?";
 
 
 }
 
+else if(text.includes("skill")){
+
+
+followUp=
+"Nice. Which skill are you most confident about and why?";
+
+
+}
+
+else if(text.includes("ai")){
+
+
+followUp=
+"Interesting. Explain one real world application of AI.";
+
+
+}
 
 else{
 
 
-speak(
-"Interview completed. Generating your report."
-);
-
-
-setStatus("Completed");
-
+followUp=
+questions[index+1] ||
+"Tell me more about your experience.";
 
 }
 
 
-},2000);
+
+setTimeout(()=>{
+
+
+let next=index+1;
+
+
+setIndex(next);
+
+
+
+setChat(prev=>[
+
+...prev,
+
+{
+ai:followUp
+}
+
+]);
+
+
+speak(followUp);
+
+
+
+},1500);
 
 
 
@@ -243,6 +258,7 @@ setStatus("Completed");
 
 
 return(
+
 
 <div className="interview">
 
@@ -259,83 +275,92 @@ return(
 
 
 <h2>
-AI Interviewer
+🤖 AI Interviewer
 </h2>
 
 
+<div className="messages">
+
+
+{
+chat.map((c,i)=>(
+
+<div key={i}>
+
+
+{
+c.ai &&
+<p className="ai">
+AI: {c.ai}
+</p>
+}
+
+
+{
+c.user &&
+<p className="user">
+You: {c.user}
+</p>
+}
+
+
+</div>
+
+
+))
+}
+
+
+</div>
+
+
+
+<button onClick={startInterview}>
+
+🎤 Speak Answer
+
+</button>
+
+
+{
+listening &&
+<p>
+Listening...
+</p>
+}
+
+
+
+
+<div className="liveScore">
+
+
 <h3>
-Hi {user} 👋
+Live Analysis
 </h3>
 
 
-
-<div className="question">
-
-{questions[current].q}
-
-</div>
-
-
-
-<p className="status">
-
-{status}
-
-</p>
-
-
-
-<div className="answer">
-
-{answer || "Your answer will appear here..."}
-
-</div>
-
-
-
-<button onClick={()=>speak(questions[current].q)}>
-🔊 Ask Question
-</button>
-
-
-<button onClick={startListening}>
-🎤 Speak Answer
-</button>
-
-
-
-<div className="analysis">
-
-
-<h3>Live Analysis</h3>
-
-
 <p>
-Confidence:
-{Math.round(scores.confidence)}%
+Confidence {score.confidence}%
 </p>
 
 
 <p>
-Communication:
-{Math.round(scores.communication)}%
+Communication {score.communication}%
 </p>
 
 
 <p>
-Technical:
-{Math.round(scores.technical)}%
+Technical {score.technical}%
 </p>
 
 
 <p>
-Clarity:
-{Math.round(scores.clarity)}%
+Clarity {score.clarity}%
 </p>
 
 
 </div>
-
 
 
 </div>
@@ -348,6 +373,3 @@ Clarity:
 
 
 }
-
-
-export default AIAvatar;
