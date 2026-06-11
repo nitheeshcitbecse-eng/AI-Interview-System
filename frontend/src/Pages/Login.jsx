@@ -5,8 +5,7 @@ import "../App.css";
 
 export default function Login(){
 
-
-const navigate = useNavigate();
+const navigate=useNavigate();
 
 
 const [username,setUsername]=useState("");
@@ -14,14 +13,14 @@ const [password,setPassword]=useState("");
 
 
 
-function handleSubmit(e){
+function submit(e){
 
 e.preventDefault();
 
 
-if(username.trim()==="" || password.trim()===""){
+if(!username || !password){
 
-alert("Enter username and password");
+alert("Enter details");
 
 return;
 
@@ -34,13 +33,10 @@ username
 );
 
 
-// OPEN DASHBOARD
-
 navigate("/dashboard");
 
 
 }
-
 
 
 
@@ -63,44 +59,32 @@ Smart Mock Interview Platform
 
 
 <p>
-Practice interviews with AI voice,
-resume analysis and live feedback.
+AI voice interview, resume analysis and live performance report.
 </p>
 
 
 
 <div className="features">
 
-<div>
-🎤 Voice AI
-</div>
-
-<div>
-📊 Live Score
-</div>
-
-<div>
-📄 Resume AI
-</div>
-
-<div>
-🏆 Report Card
-</div>
+<div>🎤 Voice AI</div>
+<div>📊 Live Analysis</div>
+<div>📄 Resume AI</div>
+<div>🏆 Report Card</div>
 
 
 </div>
 
 
 </div>
+
 
 
 
 
 <form
 className="loginBox"
-onSubmit={handleSubmit}
+onSubmit={submit}
 >
-
 
 
 <h1>
@@ -111,15 +95,11 @@ Login
 
 <input
 
-type="text"
-
 placeholder="Username"
 
 value={username}
 
-onChange={
-e=>setUsername(e.target.value)
-}
+onChange={e=>setUsername(e.target.value)}
 
 />
 
@@ -133,17 +113,15 @@ placeholder="Password"
 
 value={password}
 
-onChange={
-e=>setPassword(e.target.value)
-}
+onChange={e=>setPassword(e.target.value)}
 
 />
 
 
 
-<button type="submit">
+<button>
 
-🚀 Start Interview
+Start Interview 🚀
 
 </button>
 
@@ -152,7 +130,9 @@ e=>setPassword(e.target.value)
 </form>
 
 
+
 </div>
+
 
 )
 

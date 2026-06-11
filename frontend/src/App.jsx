@@ -8,7 +8,6 @@ import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 
 
-
 function App(){
 
 
@@ -17,11 +16,10 @@ return(
 <Routes>
 
 
-<Route
+<Route 
 path="/"
 element={<Login/>}
 />
-
 
 
 <Route
