@@ -48,7 +48,13 @@ page==="dashboard" &&
 
 <AIAvatar setReport={setReport}/>
 
+<div className="rightArea">
+
 <LiveAnalysis report={report}/>
+
+<BoostPanel/>
+
+</div>
 
 </>
 
