@@ -1,5 +1,6 @@
 import {useState,useEffect} from "react";
 import "../App.css";
+import hero from "../assets/hero.png";
 
 
 export default function AIAvatar({setReport}){

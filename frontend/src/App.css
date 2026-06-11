@@ -1,3 +1,5 @@
+/* ===== GLOBAL ===== */
+
 *{
 box-sizing:border-box;
 }
@@ -6,29 +8,228 @@ box-sizing:border-box;
 body{
 
 margin:0;
+font-family:"Inter",Arial,sans-serif;
 background:#030617;
 color:white;
-font-family:Inter,Arial;
 
 }
+
+
+#root{
+
+height:100vh;
+
+}
+
+
+
+/* ===== LOGIN PAGE ===== */
+
+
+.loginPage{
+
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:space-around;
+
+background:
+radial-gradient(circle at top left,#5428ff,#050518 50%),
+#050518;
+
+overflow:hidden;
+
+}
+
+
+
+.loginLeft{
+
+width:45%;
+
+}
+
+
+
+.loginLeft h1{
+
+font-size:60px;
+
+background:linear-gradient(
+90deg,#00ffff,#8b5cff
+);
+
+-webkit-background-clip:text;
+color:transparent;
+
+}
+
+
+
+.loginLeft h2{
+
+font-size:32px;
+
+}
+
+
+
+.loginLeft p{
+
+font-size:20px;
+color:#bfc3ff;
+
+}
+
+
+
+.features{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:40px;
+
+}
+
+
+
+.features div{
+
+padding:25px;
+
+background:#111638;
+
+border-radius:25px;
+
+font-size:20px;
+
+box-shadow:
+0 0 25px #4b2cff;
+
+}
+
+
+
+
+.loginBox{
+
+width:420px;
+
+padding:45px;
+
+background:
+rgba(255,255,255,0.08);
+
+backdrop-filter:blur(20px);
+
+border-radius:35px;
+
+box-shadow:
+0 0 50px #572cff;
+
+}
+
+
+
+.loginBox h1{
+
+text-align:center;
+font-size:35px;
+
+}
+
+
+
+.loginBox input{
+
+width:100%;
+
+margin:15px 0;
+
+padding:18px;
+
+border-radius:20px;
+
+border:none;
+
+background:#080b25;
+
+color:white;
+
+font-size:18px;
+
+}
+
+
+
+.loginBox button{
+
+width:100%;
+
+padding:18px;
+
+font-size:20px;
+
+background:
+linear-gradient(
+90deg,#602cff,#00c6ff
+);
+
+border:none;
+
+border-radius:30px;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+
+
+/* ===== DASHBOARD ===== */
 
 
 .app{
 
 display:flex;
+
 height:100vh;
+
 gap:15px;
+
 padding:15px;
 
 }
 
 
+
+
+/* ===== SIDEBAR ===== */
+
+
 .sidebar{
 
-width:230px;
+width:240px;
+
 background:#080d26;
+
 border-radius:25px;
+
 padding:25px;
+
+box-shadow:
+0 0 25px #1018ff;
+
+}
+
+
+
+.sidebar h2{
+
+font-size:24px;
 
 }
 
@@ -37,13 +238,18 @@ padding:25px;
 .sidebar div{
 
 padding:15px;
-margin:8px 0;
+
+margin:10px 0;
+
 border-radius:15px;
+
+cursor:pointer;
 
 }
 
 
 
+.sidebar div:hover,
 .active{
 
 background:#4728ff;
@@ -52,9 +258,16 @@ background:#4728ff;
 
 
 
+
+
+/* ===== CENTER ===== */
+
+
 .center{
 
 flex:1;
+
+overflow:auto;
 
 }
 
@@ -63,25 +276,52 @@ flex:1;
 .topbar{
 
 height:60px;
+
 background:#080d26;
+
 border-radius:20px;
-padding:15px;
+
+padding:18px;
+
+font-size:20px;
+
+margin-bottom:15px;
 
 }
 
+
+
+/* ===== INTERVIEW ===== */
 
 
 .interview{
 
 height:55vh;
 
+display:flex;
+
 background:#080d26;
 
-border-radius:25px;
+border-radius:30px;
+
+padding:25px;
+
+box-shadow:
+0 0 30px #161cff;
+
+}
+
+
+
+
+.avatar{
+
+width:45%;
 
 display:flex;
 
-padding:20px;
+align-items:center;
+justify-content:center;
 
 }
 
@@ -90,48 +330,108 @@ padding:20px;
 .avatar img{
 
 height:100%;
-max-width:450px;
+
+max-width:420px;
+
+object-fit:contain;
+
+filter:
+drop-shadow(0 0 30px #4b2cff);
 
 }
+
 
 
 
 .chat{
 
-padding:20px;
 flex:1;
 
-}
-
-
-
-.question{
-
-background:#202060;
 padding:20px;
-border-radius:20px;
+
+overflow:hidden;
 
 }
 
 
 
-button{
+.messages{
 
-background:#602cff;
-border:none;
-padding:12px 25px;
+height:250px;
+
+overflow-y:auto;
+
+padding:10px;
+
+}
+
+
+
+
+.ai{
+
+background:#332070;
+
+padding:15px;
+
 border-radius:20px;
-color:white;
+
 margin:10px;
 
 }
 
 
 
+.user{
+
+background:#075b68;
+
+padding:15px;
+
+border-radius:20px;
+
+margin:10px;
+
+}
+
+
+
+
+
+button{
+
+padding:14px 25px;
+
+margin:10px;
+
+border:none;
+
+border-radius:25px;
+
+background:
+linear-gradient(
+90deg,#602cff,#00c6ff
+);
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+
+
+/* ===== BOTTOM CARDS ===== */
+
+
 .bottom{
 
 display:flex;
+
 gap:15px;
+
+margin-top:15px;
 
 }
 
@@ -139,42 +439,125 @@ gap:15px;
 
 .card{
 
-background:#080d26;
-padding:20px;
-border-radius:20px;
 flex:1;
+
+background:#080d26;
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:
+0 0 20px #111a55;
 
 }
 
+
+
+
+
+/* ===== RESUME ===== */
 
 
 .upload{
 
-border:2px dashed #5335ff;
+border:2px dashed #5b35ff;
+
 padding:25px;
-border-radius:15px;
+
+border-radius:20px;
+
+text-align:center;
 
 }
+
+
 
 
 
 span{
 
-background:#3220ff;
-padding:6px;
-border-radius:10px;
-margin:4px;
+background:#4728ff;
+
+padding:7px;
+
+margin:5px;
+
+border-radius:12px;
+
+display:inline-block;
 
 }
 
 
 
+
+
+/* ===== REPORT ===== */
+
+
+.report{
+
+background:
+
+linear-gradient(
+135deg,
+#5a20ff,
+#0b2148
+);
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:
+0 0 35px #592cff;
+
+}
+
+
+
+.circle{
+
+height:130px;
+
+width:130px;
+
+border-radius:50%;
+
+background:#00eaff;
+
+color:#030617;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:45px;
+
+margin:auto;
+
+font-weight:bold;
+
+}
+
+
+
+
+/* ===== ANALYSIS PANEL ===== */
+
+
 .analysisPanel{
 
 width:300px;
+
 background:#080d26;
+
 border-radius:25px;
-padding:20px;
+
+padding:25px;
 
 }
 
@@ -183,9 +566,12 @@ padding:20px;
 .score{
 
 background:#12183a;
+
 padding:15px;
-margin:10px;
-border-radius:15px;
+
+margin:12px 0;
+
+border-radius:20px;
 
 }
 
@@ -194,82 +580,123 @@ border-radius:15px;
 .wave{
 
 font-size:40px;
-color:#5f4cff;
+
+color:#00ffff;
 
 }
-.report{
 
-background:
-linear-gradient(
-135deg,
-#25105c,
-#091b44
-);
 
-padding:25px;
+
+
+/* ===== SETTINGS ===== */
+
+
+.settings{
+
+background:#080d26;
+
+padding:20px;
+
 border-radius:25px;
 
 }
 
 
-.circle{
 
-width:120px;
-height:120px;
 
-border-radius:50%;
 
-background:#5b2cff;
+/* ===== MOBILE ===== */
 
-display:flex;
-align-items:center;
+
+@media(max-width:900px){
+
+
+.app{
+
+flex-direction:column;
+
+}
+
+
+
+.sidebar{
+
+width:100%;
+
+}
+
+
+
+.interview{
+
+flex-direction:column;
+
+height:auto;
+
+}
+
+
+
+.avatar{
+
+width:100%;
+
+height:300px;
+
+}
+
+
+
+.bottom{
+
+flex-direction:column;
+
+}
+
+
+
+.loginPage{
+
+flex-direction:column;
+
 justify-content:center;
+
+gap:30px;
+
+}
+
+
+
+.loginLeft{
+
+width:90%;
+
+}
+
+
+
+.loginLeft h1{
 
 font-size:40px;
 
-margin:auto;
+}
+
+
+
+.loginBox{
+
+width:90%;
 
 }
 
 
 
-.bars span{
+.analysisPanel{
 
-display:block;
-
-height:8px;
-
-background:#00ffff;
-
-border-radius:20px;
+width:100%;
 
 }
 
 
-
-.ai{
-
-background:#302060;
-padding:15px;
-border-radius:15px;
-
-}
-
-
-
-.user{
-
-background:#064f62;
-padding:15px;
-border-radius:15px;
-
-}
-
-
-
-.messages{
-
-height:220px;
-overflow:auto;
 
 }
