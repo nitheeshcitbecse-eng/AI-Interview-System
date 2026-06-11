@@ -14,17 +14,23 @@ import "../App.css";
 export default function Dashboard(){
 
 
-const [page,setPage]=useState("dashboard");
+const [page,setPage] = useState("dashboard");
 
 
-const [report,setReport]=useState({
+const [report,setReport] = useState({
 
 overall:0,
+
 communication:0,
+
 technical:0,
+
 confidence:0,
+
 clarity:0,
+
 strengths:[],
+
 improve:[]
 
 });
@@ -36,6 +42,7 @@ return(
 <div className="app">
 
 
+
 <Sidebar setPage={setPage}/>
 
 
@@ -43,17 +50,26 @@ return(
 <div className="fullPage">
 
 
+
 {
+
 page==="dashboard" &&
+
+
+<>
+
 
 <div className="dashboardGrid">
 
 
-<div className="leftInterview">
+
+<div className="leftSide">
 
 
-<AIAvatar 
+<AIAvatar
+
 setReport={setReport}
+
 />
 
 
@@ -62,11 +78,14 @@ setReport={setReport}
 
 
 
-<div className="rightPanel">
+<div className="rightSide">
 
 
-<LiveAnalysis 
+
+<LiveAnalysis
+
 report={report}
+
 />
 
 
@@ -74,17 +93,27 @@ report={report}
 <BoostPanel/>
 
 
-</div>
 
 
 </div>
+
+
+
+</div>
+
+
+
+</>
+
 
 }
 
 
 
 
+
 {
+
 page==="resume" &&
 
 <ResumeAnalyzer/>
@@ -93,18 +122,25 @@ page==="resume" &&
 
 
 
+
 {
+
 page==="report" &&
 
-<ReportCard 
+<ReportCard
+
 report={report}
+
 />
 
 }
 
 
 
+
+
 {
+
 page==="settings" &&
 
 <SettingsPanel/>
@@ -113,9 +149,14 @@ page==="settings" &&
 
 
 
-</div>
+
 
 </div>
+
+
+
+</div>
+
 
 )
 
