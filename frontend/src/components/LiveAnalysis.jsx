@@ -1,66 +1,101 @@
-export default function LiveAnalysis(){
+import "../App.css";
+
+
+export default function LiveAnalysis({report}){
+
 
 return(
 
-<div className="analysisPanel">
+<div className="liveAnalysis">
 
+
+<h1>
+📊 Live Interview Analysis
+</h1>
+
+
+<div className="rankCircle">
+
+{report?.overall || 0}
+
+<span>
+/100
+</span>
+
+</div>
+
+
+
+<div className="analysisGrid">
+
+
+<div className="analysisCard">
+
+<h2>🎤 Communication</h2>
+
+<h1>
+{report?.communication || 0}%
+</h1>
+
+</div>
+
+
+
+<div className="analysisCard">
+
+<h2>💡 Technical</h2>
+
+<h1>
+{report?.technical || 0}%
+</h1>
+
+</div>
+
+
+
+
+<div className="analysisCard">
+
+<h2>🔥 Confidence</h2>
+
+<h1>
+{report?.confidence || 0}%
+</h1>
+
+</div>
+
+
+
+
+<div className="analysisCard">
+
+<h2>✨ Clarity</h2>
+
+<h1>
+{report?.clarity || 0}%
+</h1>
+
+</div>
+
+
+</div>
+
+
+
+<div className="feedbackBox">
 
 <h2>
-✨ Live Analysis
+AI Feedback
 </h2>
 
 
-<div className="score">
-
-Confidence
-<h1>78%</h1>
-
-</div>
-
-
-<div className="score">
-
-Clarity
-<h1>82%</h1>
-
-</div>
-
-
-
-<div className="score">
-
-Communication
-<h1>85%</h1>
-
-</div>
-
-
-
-<div className="score">
-
-Technical
-<h1>75%</h1>
-
-</div>
-
-
-
-<div className="wave">
-
-〰〰〰〰〰〰
-
-</div>
-
-
-
-<h3>
-Current Question
-</h3>
-
-
 <p>
-Explain supervised and unsupervised learning.
+Your answers are analysed in real time.
+Keep explaining with examples and projects.
 </p>
+
+
+</div>
 
 
 </div>
