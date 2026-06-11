@@ -6,36 +6,47 @@ import "../App.css";
 export default function Login(){
 
 
-const navigate=useNavigate();
+const navigate = useNavigate();
 
 
-const [name,setName]=useState("");
+const [username,setUsername]=useState("");
 const [password,setPassword]=useState("");
 
 
 
-function submit(e){
+function handleSubmit(e){
 
 e.preventDefault();
 
 
-if(name && password){
+if(username.trim()==="" || password.trim()===""){
 
-localStorage.setItem("user",name);
+alert("Enter username and password");
+
+return;
+
+}
+
+
+localStorage.setItem(
+"user",
+username
+);
+
+
+// OPEN DASHBOARD
 
 navigate("/dashboard");
 
-}
 
 }
+
 
 
 
 return(
 
-
 <div className="loginPage">
-
 
 
 <div className="loginLeft">
@@ -47,45 +58,37 @@ return(
 
 
 <h2>
-Your Personal AI Career Coach
+Smart Mock Interview Platform
 </h2>
 
 
 <p>
-
-Practice interviews,
-improve confidence,
-and get real-time AI feedback.
-
+Practice interviews with AI voice,
+resume analysis and live feedback.
 </p>
 
 
 
 <div className="features">
 
+<div>
+🎤 Voice AI
+</div>
 
 <div>
-🎤 Voice Interview
+📊 Live Score
 </div>
-
 
 <div>
-📊 Live Analysis
+📄 Resume AI
 </div>
-
 
 <div>
-📄 Resume Review
-</div>
-
-
-<div>
-🏆 Smart Report
+🏆 Report Card
 </div>
 
 
 </div>
-
 
 
 </div>
@@ -95,28 +98,27 @@ and get real-time AI feedback.
 
 <form
 className="loginBox"
-onSubmit={submit}
+onSubmit={handleSubmit}
 >
 
 
 
 <h1>
-Welcome Back 👋
+Login
 </h1>
-
-
-<p>
-Login to start your interview
-</p>
 
 
 
 <input
 
+type="text"
+
 placeholder="Username"
 
+value={username}
+
 onChange={
-e=>setName(e.target.value)
+e=>setUsername(e.target.value)
 }
 
 />
@@ -129,6 +131,8 @@ type="password"
 
 placeholder="Password"
 
+value={password}
+
 onChange={
 e=>setPassword(e.target.value)
 }
@@ -137,7 +141,7 @@ e=>setPassword(e.target.value)
 
 
 
-<button>
+<button type="submit">
 
 🚀 Start Interview
 
@@ -148,9 +152,7 @@ e=>setPassword(e.target.value)
 </form>
 
 
-
 </div>
-
 
 )
 
