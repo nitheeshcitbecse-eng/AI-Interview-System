@@ -3,9 +3,11 @@ import {useState} from "react";
 import Sidebar from "../components/Sidebar";
 import AIAvatar from "../components/AIAvatar";
 import LiveAnalysis from "../components/LiveAnalysis";
+
 import ResumeAnalyzer from "../components/ResumeAnalyzer";
 import ReportCard from "../components/ReportCard";
 import SettingsPanel from "../components/SettingsPanel";
+
 
 import "../App.css";
 
@@ -13,19 +15,10 @@ import "../App.css";
 export default function Dashboard(){
 
 
-const [report,setReport]=useState({
+const [page,setPage]=useState("dashboard");
 
-overall:0,
-confidence:0,
-communication:0,
-technical:0,
-clarity:0,
 
-strengths:[],
-improve:[]
-
-});
-
+const [report,setReport]=useState({});
 
 
 return(
@@ -33,42 +26,55 @@ return(
 <div className="app">
 
 
-<Sidebar/>
+<Sidebar setPage={setPage}/>
 
 
-<div className="center">
+<div className="fullPage">
 
 
-<div className="topbar">
-🔴 Live Interview
-</div>
+{
+page==="dashboard" &&
 
+<>
 
 <AIAvatar setReport={setReport}/>
 
+<LiveAnalysis report={report}/>
+
+</>
+
+}
 
 
-<div className="bottom">
 
+{
+page==="resume" &&
 
 <ResumeAnalyzer/>
 
+}
+
+
+
+{
+page==="report" &&
 
 <ReportCard report={report}/>
 
+}
+
+
+
+{
+page==="settings" &&
 
 <SettingsPanel/>
 
+}
+
+
 
 </div>
-
-
-
-</div>
-
-
-
-<LiveAnalysis report={report}/>
 
 
 

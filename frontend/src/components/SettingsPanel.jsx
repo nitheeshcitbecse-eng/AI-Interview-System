@@ -1,33 +1,128 @@
+import {useState} from "react";
+
+
 export default function SettingsPanel(){
+
+
+const [camera,setCamera]=useState(true);
+
+const [mic,setMic]=useState(true);
+
+const [speed,setSpeed]=useState(1);
+
+
 
 return(
 
-<div className="card">
+<div className="bigPage">
+
+
+<h1>
+⚙ Interview Settings
+</h1>
+
+
+
+<div className="settingBox">
 
 
 <h2>
-Settings
+Camera
+</h2>
+
+<button onClick={()=>setCamera(!camera)}>
+
+{camera?"ON":"OFF"}
+
+</button>
+
+
+
+<h2>
+Microphone
 </h2>
 
 
-<p>
-🎤 Voice: Female
-</p>
+<button onClick={()=>setMic(!mic)}>
+
+{mic?"ON":"OFF"}
+
+</button>
 
 
-<p>
-Speed: Normal
-</p>
+
+<h2>
+AI Voice Speed
+</h2>
 
 
-<p>
-Language: English
-</p>
+<input
+
+type="range"
+
+min="0.5"
+
+max="2"
+
+step="0.1"
+
+value={speed}
+
+onChange={
+e=>setSpeed(e.target.value)
+}
+
+/>
 
 
-<p>
-Camera: ON
-</p>
+<h2>
+Language
+</h2>
+
+
+<select>
+
+<option>
+English
+</option>
+
+<option>
+Tamil
+</option>
+
+<option>
+Hindi
+</option>
+
+</select>
+
+
+
+<h2>
+Difficulty
+</h2>
+
+
+<select>
+
+<option>
+Beginner
+</option>
+
+<option>
+Intermediate
+</option>
+
+<option>
+Advanced
+</option>
+
+
+</select>
+
+
+
+</div>
 
 
 </div>

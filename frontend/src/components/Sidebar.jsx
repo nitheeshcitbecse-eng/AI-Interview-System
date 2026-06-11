@@ -1,4 +1,5 @@
-export default function Sidebar(){
+export default function Sidebar({setPage}){
+
 
 return(
 
@@ -6,43 +7,28 @@ return(
 
 
 <h2>
-✨ AI Interviewer
+🤖 AI Interview
 </h2>
 
 
-<div className="active">
-🏠 Home
-</div>
+<button onClick={()=>setPage("dashboard")}>
+🏠 Dashboard
+</button>
 
 
-<div>
-🎤 Mock Interview
-</div>
-
-
-<div>
+<button onClick={()=>setPage("resume")}>
 📄 Resume Analyzer
-</div>
+</button>
 
 
-<div>
-📚 Practice Topics
-</div>
+<button onClick={()=>setPage("report")}>
+📊 Report Card
+</button>
 
 
-<div>
-📊 Interview History
-</div>
-
-
-<div>
-🤖 AI Feedback
-</div>
-
-
-<div>
+<button onClick={()=>setPage("settings")}>
 ⚙ Settings
-</div>
+</button>
 
 
 </div>
