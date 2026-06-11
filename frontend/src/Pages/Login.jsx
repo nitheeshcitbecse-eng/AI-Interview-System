@@ -5,8 +5,7 @@ import "../App.css";
 
 export default function Login(){
 
-
-const navigate = useNavigate();
+const navigate=useNavigate();
 
 
 const [username,setUsername]=useState("");
@@ -14,28 +13,28 @@ const [password,setPassword]=useState("");
 
 
 
-function handleSubmit(e){
+function submit(e){
 
 e.preventDefault();
 
-console.log("SUBMIT CLICKED");
+
+if(!username || !password){
+
+alert("Enter details");
+
+return;
+
+}
 
 
-if(username && password){
+localStorage.setItem(
+"user",
+username
+);
 
-localStorage.setItem("user",username);
-
-console.log("GOING DASHBOARD");
 
 navigate("/dashboard");
 
-}
-
-else{
-
-alert("Enter username and password");
-
-}
 
 }
 
@@ -60,44 +59,32 @@ Smart Mock Interview Platform
 
 
 <p>
-Practice interviews with AI voice,
-resume analysis and live feedback.
+AI voice interview, resume analysis and live performance report.
 </p>
 
 
 
 <div className="features">
 
-<div>
-🎤 Voice AI
-</div>
-
-<div>
-📊 Live Score
-</div>
-
-<div>
-📄 Resume AI
-</div>
-
-<div>
-🏆 Report Card
-</div>
+<div>🎤 Voice AI</div>
+<div>📊 Live Analysis</div>
+<div>📄 Resume AI</div>
+<div>🏆 Report Card</div>
 
 
 </div>
 
 
 </div>
+
 
 
 
 
 <form
 className="loginBox"
-onSubmit={handleSubmit}
+onSubmit={submit}
 >
-
 
 
 <h1>
@@ -108,15 +95,11 @@ Login
 
 <input
 
-type="text"
-
 placeholder="Username"
 
 value={username}
 
-onChange={
-e=>setUsername(e.target.value)
-}
+onChange={e=>setUsername(e.target.value)}
 
 />
 
@@ -130,17 +113,15 @@ placeholder="Password"
 
 value={password}
 
-onChange={
-e=>setPassword(e.target.value)
-}
+onChange={e=>setPassword(e.target.value)}
 
 />
 
 
 
-<button type="submit">
+<button>
 
-🚀 Start Interview
+Start Interview 🚀
 
 </button>
 
@@ -149,189 +130,10 @@ e=>setPassword(e.target.value)
 </form>
 
 
+
 </div>
 
+
 )
-
-}
-/* ===== ONLY LAYOUT CHANGES ===== */
-
-
-.dashboardGrid{
-
-height:100%;
-
-display:grid;
-
-grid-template-columns:
-2.2fr 1fr;
-
-gap:20px;
-
-}
-
-
-/* left AI area up */
-
-.leftArea{
-
-height:100%;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:flex-start;
-
-}
-
-
-
-
-
-.interviewWrapper{
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-}
-
-
-
-
-/* keep your old AI colors */
-
-.interviewBox{
-
-height:70vh;
-
-width:100%;
-
-}
-
-
-
-
-
-/* keep robot size */
-
-.avatarBox img{
-
-height:85%;
-
-}
-
-
-
-
-/* mini cards under robot */
-
-
-.bottomMini{
-
-display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
-gap:18px;
-
-}
-
-
-
-
-.miniCard{
-
-background:
-
-rgba(255,255,255,0.08);
-
-backdrop-filter:blur(20px);
-
-border-radius:25px;
-
-padding:20px;
-
-box-shadow:
-
-0 0 25px #5428ff;
-
-}
-
-
-
-
-
-/* right side */
-
-
-.rightArea{
-
-height:100%;
-
-display:flex;
-
-flex-direction:column;
-
-gap:20px;
-
-}
-
-
-
-
-
-.rightArea .bigAnalysis{
-
-height:55%;
-
-}
-
-
-
-
-.rightArea .boostPanel{
-
-height:40%;
-
-}
-
-
-
-
-
-/* remove accidental white */
-
-.fullPage,
-.leftArea,
-.rightArea{
-
-background:transparent;
-
-}
-
-
-
-
-
-@media(max-width:1000px){
-
-
-.dashboardGrid{
-
-grid-template-columns:1fr;
-
-}
-
-
-.bottomMini{
-
-grid-template-columns:1fr;
-
-}
 
 }
