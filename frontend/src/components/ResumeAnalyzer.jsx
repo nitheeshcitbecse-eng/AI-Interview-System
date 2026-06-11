@@ -1,43 +1,194 @@
+import {useState} from "react";
+import "../App.css";
+
+
 export default function ResumeAnalyzer(){
+
+
+const [result,setResult]=useState(null);
+
+
+
+function analyze(e){
+
+
+let file=e.target.files[0];
+
+
+if(!file) return;
+
+
+
+let name=file.name.toLowerCase();
+
+
+let score=50;
+
+
+let skills=[];
+
+
+
+if(
+name.includes("java") ||
+name.includes("react") ||
+name.includes("python")
+){
+
+score+=20;
+
+skills.push("Technical Skills");
+
+}
+
+
+if(
+name.includes("resume") ||
+name.includes("cv")
+){
+
+score+=15;
+
+}
+
+
+
+if(score>80){
+
+setResult({
+
+level:"Strong Resume 🔥",
+
+score,
+
+message:
+"Resume is well prepared for interviews"
+
+});
+
+}
+
+else if(score>60){
+
+
+setResult({
+
+level:"Good Resume 👍",
+
+score,
+
+message:
+"Add more projects and achievements"
+
+});
+
+
+}
+
+else{
+
+
+setResult({
+
+level:"Needs Improvement ⚠️",
+
+score,
+
+message:
+"Improve skills, projects and experience section"
+
+});
+
+
+}
+
+
+
+}
+
+
 
 return(
 
-<div className="card">
+
+<div className="resumePage">
 
 
-<h2>
-Resume Analyzer
-</h2>
+<h1>
+📄 AI Resume Analyzer
+</h1>
 
 
-<div className="upload">
 
-☁
+<div className="uploadBox">
+
+
+<input
+
+type="file"
+
+onChange={analyze}
+
+/>
 
 
 <p>
-Drag & Drop Resume Here
+Upload your resume
+
 </p>
 
 
-<input type="file"/>
+</div>
+
+
+
+
+{
+
+result &&
+
+
+<div className="resumeResult">
+
+
+<h1>
+{result.score}/100
+</h1>
+
+
+<h2>
+{result.level}
+</h2>
+
+
+<p>
+{result.message}
+</p>
+
+
+
+<div className="resumeBar">
+
+<div
+style={{
+width:`${result.score}%`
+}}
+>
+
+</div>
+
+</div>
 
 
 </div>
 
 
-<h3>
-Matched Skills
-</h3>
+}
 
-
-<span>Python</span>
-<span>React</span>
-<span>AI</span>
-<span>ML</span>
 
 
 </div>
+
 
 )
 
