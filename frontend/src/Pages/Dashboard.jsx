@@ -23,7 +23,9 @@ overall:0,
 communication:0,
 technical:0,
 confidence:0,
-clarity:0
+clarity:0,
+strengths:[],
+improve:[]
 
 });
 
@@ -47,19 +49,26 @@ page==="dashboard" &&
 <div className="dashboardGrid">
 
 
-<div>
+<div className="leftInterview">
 
 
-<AIAvatar setReport={setReport}/>
+<AIAvatar 
+setReport={setReport}
+/>
 
 
 </div>
 
 
-<div>
 
 
-<LiveAnalysis report={report}/>
+<div className="rightPanel">
+
+
+<LiveAnalysis 
+report={report}
+/>
+
 
 
 <BoostPanel/>
@@ -87,10 +96,11 @@ page==="resume" &&
 {
 page==="report" &&
 
-<ReportCard report={report}/>
+<ReportCard 
+report={report}
+/>
 
 }
-
 
 
 
@@ -104,7 +114,6 @@ page==="settings" &&
 
 
 </div>
-
 
 </div>
 
