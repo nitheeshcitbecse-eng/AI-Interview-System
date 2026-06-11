@@ -1,80 +1,41 @@
-import "../App.css";
-
-
 export default function LiveAnalysis({report}){
 
 
 return(
 
-<div className="liveAnalysis">
+<div className="bigAnalysis">
 
 
 <h1>
-📊 Live Interview Analysis
+📊 AI Performance Report
 </h1>
 
 
-<div className="rankCircle">
+<div className="bigScore">
 
-{report?.overall || 0}
-
-<span>
-/100
-</span>
+{report.overall || 0}
 
 </div>
 
 
+<div className="cards">
 
-<div className="analysisGrid">
 
-
-<div className="analysisCard">
-
+<div>
 <h2>🎤 Communication</h2>
-
-<h1>
-{report?.communication || 0}%
-</h1>
-
+<h1>{report.communication || 0}%</h1>
 </div>
 
 
-
-<div className="analysisCard">
-
-<h2>💡 Technical</h2>
-
-<h1>
-{report?.technical || 0}%
-</h1>
-
+<div>
+<h2>💻 Technical</h2>
+<h1>{report.technical || 0}%</h1>
 </div>
 
 
-
-
-<div className="analysisCard">
-
+<div>
 <h2>🔥 Confidence</h2>
-
-<h1>
-{report?.confidence || 0}%
-</h1>
-
-</div>
-
-
-
-
-<div className="analysisCard">
-
-<h2>✨ Clarity</h2>
-
-<h1>
-{report?.clarity || 0}%
-</h1>
-
+<h1>{report.confidence || 0}%</h1>
 </div>
 
 
@@ -82,24 +43,21 @@ return(
 
 
 
-<div className="feedbackBox">
+<div className="emptyFill">
+
+
+<img src="/src/assets/hero.png"/>
 
 <h2>
-AI Feedback
+AI is analyzing your interview in real time
 </h2>
 
 
-<p>
-Your answers are analysed in real time.
-Keep explaining with examples and projects.
-</p>
-
-
 </div>
 
 
-</div>
 
+</div>
 
 )
 

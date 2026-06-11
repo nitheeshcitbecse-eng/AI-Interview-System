@@ -1,61 +1,47 @@
-import {useState,useEffect} from "react";
-import "../App.css";
+import {useState} from "react";
 import hero from "../assets/hero.png";
+import "../App.css";
 
 
 export default function AIAvatar({setReport}){
-
-
-const user=localStorage.getItem("user");
 
 
 const questions=[
 
 "Tell me about yourself.",
 
-"Why did you choose this field?",
-
-"What are your technical skills?",
+"Why did you choose this career?",
 
 "Explain your project.",
 
-"What challenges did you face?",
+"What are your technical skills?",
 
-"Why should we hire you?"
+"What is your biggest strength?"
 
 ];
 
 
-const [current,setCurrent]=useState(0);
+const [index,setIndex]=useState(0);
 
+const [listening,setListening]=useState(false);
 
-const [chat,setChat]=useState([
+const [messages,setMessages]=useState([
 {
-ai:`Hi ${user} 👋. Welcome to your AI interview. ${questions[0]}`
+ai:questions[0]
 }
 ]);
 
 
-const [listening,setListening]=useState(false);
 
+const [score,setScore]=useState({
 
-
-let scores={
-communication:50,
+overall:50,
 technical:50,
-confidence:50,
-clarity:50
-};
+communication:50,
+confidence:50
 
+});
 
-
-useEffect(()=>{
-
-speak(
-`Hi ${user}. ${questions[0]}`
-);
-
-},[]);
 
 
 
@@ -67,9 +53,6 @@ let speech=new SpeechSynthesisUtterance(text);
 
 speech.rate=0.9;
 
-speech.pitch=1;
-
-
 window.speechSynthesis.cancel();
 
 window.speechSynthesis.speak(speech);
@@ -80,11 +63,28 @@ window.speechSynthesis.speak(speech);
 
 
 
+function startInterview(){
 
-function startListening(){
+
+speak(
+questions[index]
+);
 
 
-let SpeechRecognition =
+startVoice();
+
+
+}
+
+
+
+
+
+function startVoice(){
+
+
+
+const SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
@@ -92,7 +92,9 @@ window.webkitSpeechRecognition;
 
 if(!SpeechRecognition){
 
-alert("Please use Chrome");
+alert(
+"Please open in Chrome and allow microphone"
+);
 
 return;
 
@@ -100,12 +102,16 @@ return;
 
 
 
-let recognition=new SpeechRecognition();
+let recognition =
+new SpeechRecognition();
+
 
 
 recognition.lang="en-US";
 
+
 recognition.start();
+
 
 
 setListening(true);
@@ -115,24 +121,24 @@ setListening(true);
 recognition.onresult=(event)=>{
 
 
-let answer =
+let text =
 event.results[0][0].transcript;
 
 
 
-setChat(prev=>[
+setMessages(prev=>[
 
 ...prev,
 
 {
-user:answer
+user:text
 }
 
 ]);
 
 
 
-analyzeAnswer(answer);
+analyse(text);
 
 
 
@@ -153,205 +159,92 @@ setListening(false);
 
 
 
-function analyzeAnswer(answer){
-
-
-let text=answer.toLowerCase();
+function analyse(text){
 
 
 
-// communication
+let t=text.toLowerCase();
 
-if(answer.length>70)
-scores.communication+=20;
 
-else
-scores.communication-=5;
+let newScore={...score};
 
 
 
-// technical detection
+if(text.length>80){
 
+newScore.communication+=15;
 
-let tech=[
-
-"java",
-"python",
-"react",
-"ai",
-"machine learning",
-"sql",
-"database",
-"algorithm"
-
-];
-
-
-tech.forEach(word=>{
-
-if(text.includes(word)){
-
-scores.technical+=8;
-
-}
-
-});
-
-
-
-
-// confidence
-
-if(
-text.includes("created") ||
-text.includes("developed") ||
-text.includes("built")
-){
-
-scores.confidence+=10;
+newScore.confidence+=10;
 
 }
 
 else{
 
-scores.confidence-=5;
+newScore.communication-=5;
 
 }
 
 
 
+if(
+t.includes("java")||
+t.includes("python")||
+t.includes("react")||
+t.includes("ai")
+){
 
-scores.clarity =
-Math.min(
-90,
-scores.communication
-);
+newScore.technical+=15;
+
+}
 
 
 
-
-
-let total=Math.round(
+newScore.overall=Math.round(
 
 (
-scores.communication+
-scores.technical+
-scores.confidence+
-scores.clarity
-
-)/4
+newScore.communication+
+newScore.technical+
+newScore.confidence
+)/3
 
 );
 
 
 
-
-
-setReport({
-
-overall:total,
-
-communication:
-scores.communication,
-
-technical:
-scores.technical,
-
-confidence:
-scores.confidence,
-
-clarity:
-scores.clarity,
-
-strengths:
-
-total>70
-?
-["Good explanation","Good confidence"]
-:
-[],
-
-improve:
-
-total<70
-?
-["Explain with more details","Improve technical depth"]
-:
-[]
-
-});
+setScore(newScore);
 
 
 
-
-
-let nextQuestion;
+setReport(newScore);
 
 
 
-if(
-text.includes("project")
-){
-
-nextQuestion=
-"Interesting. What technologies did you use in your project?";
-
-}
-
-else if(
-text.includes("skill")
-){
-
-nextQuestion=
-"Which skill are you strongest in and why?";
-
-}
-
-else if(
-text.includes("java")
-||
-text.includes("python")
-){
-
-nextQuestion=
-"Can you explain one concept from that technology?";
-
-}
-
-else{
+let next =
+questions[index+1] ||
+"Interview completed. Great work.";
 
 
-let next=current+1;
 
-
-nextQuestion=
-questions[next] ||
-"Tell me more about your experience.";
-
-
-setCurrent(next);
-
-
-}
-
+setIndex(index+1);
 
 
 
 setTimeout(()=>{
 
 
-setChat(prev=>[
+setMessages(prev=>[
 
 ...prev,
 
 {
-ai:nextQuestion
+ai:next
 }
 
 ]);
 
 
-speak(nextQuestion);
+
+speak(next);
 
 
 
@@ -367,31 +260,25 @@ speak(nextQuestion);
 
 return(
 
-
-<div className="interview">
-
+<div className="interviewBox">
 
 
-<div className="avatar">
+<div className="avatarBox">
 
 
-<img
-src="/src/assets/hero.png"
-alt="AI"
-/>
+<img src={hero}/>
 
 
 </div>
 
 
 
-<div className="chat">
+<div className="chatBox">
 
 
-
-<h2>
+<h1>
 🤖 AI Interviewer
-</h2>
+</h1>
 
 
 
@@ -400,34 +287,26 @@ alt="AI"
 
 {
 
-chat.map((item,i)=>(
+messages.map((m,i)=>(
 
 
 <div key={i}>
 
 
 {
-item.ai &&
-
-<p className="ai">
-
-🤖 {item.ai}
-
+m.ai &&
+<p className="aiMsg">
+🤖 {m.ai}
 </p>
-
 }
 
 
 
 {
-item.user &&
-
-<p className="user">
-
-You: {item.user}
-
+m.user &&
+<p className="userMsg">
+👤 {m.user}
 </p>
-
 }
 
 
@@ -444,43 +323,57 @@ You: {item.user}
 
 
 
+<button onClick={startInterview}>
 
-<button onClick={startListening}>
-
-🎤 Speak Answer
-
-</button>
-
-
-
-<button
-onClick={()=>
-speak(
-questions[current]
-)
-}
->
-
-🔊 Repeat Question
+🎤 Start Speaking
 
 </button>
-
 
 
 
 {
-
 listening &&
 
-<h3>
+<h2 className="listen">
 
 🎙 Listening...
 
-</h3>
+</h2>
 
 }
 
 
+</div>
+
+
+
+<div className="rankCard">
+
+
+<h2>
+Live Rank Card
+</h2>
+
+
+<h1>
+{score.overall}/100
+</h1>
+
+
+<p>
+Communication {score.communication}%
+</p>
+
+
+<p>
+Technical {score.technical}%
+</p>
+
+
+<p>
+Confidence {score.confidence}%
+</p>
+
 
 
 </div>
@@ -488,7 +381,6 @@ listening &&
 
 
 </div>
-
 
 )
 
