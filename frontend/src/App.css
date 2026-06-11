@@ -1,4 +1,291 @@
-/* MAIN DASHBOARD */
+*{
+box-sizing:border-box;
+}
+
+
+body{
+
+margin:0;
+
+font-family:"Inter",Arial,sans-serif;
+
+background:#030617;
+
+color:white;
+
+}
+
+
+
+#root{
+
+height:100vh;
+
+}
+
+
+
+
+/* ================= LOGIN ================= */
+
+
+.loginPage{
+
+height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+background:
+
+radial-gradient(
+circle at top left,
+#5428ff,
+#050518 55%
+);
+
+overflow:hidden;
+
+}
+
+
+
+.loginLeft{
+
+width:50%;
+
+padding:40px;
+
+}
+
+
+
+.loginLeft h1{
+
+font-size:70px;
+
+background:
+
+linear-gradient(
+90deg,
+#00ffff,
+#8b5cff
+);
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+}
+
+
+
+.loginLeft h2{
+
+font-size:35px;
+
+}
+
+
+
+.loginLeft p{
+
+font-size:22px;
+
+color:#c4c8ff;
+
+}
+
+
+
+.features{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:25px;
+
+margin-top:40px;
+
+}
+
+
+
+.features div{
+
+padding:30px;
+
+background:
+
+rgba(255,255,255,0.08);
+
+backdrop-filter:blur(20px);
+
+border-radius:30px;
+
+font-size:22px;
+
+box-shadow:
+
+0 0 30px #5428ff;
+
+}
+
+
+
+
+.loginBox{
+
+width:450px;
+
+padding:50px;
+
+background:
+
+rgba(255,255,255,0.1);
+
+backdrop-filter:blur(25px);
+
+border-radius:35px;
+
+box-shadow:
+
+0 0 60px #5428ff;
+
+}
+
+
+
+.loginBox input{
+
+width:100%;
+
+padding:20px;
+
+margin:15px 0;
+
+border:none;
+
+border-radius:25px;
+
+background:#080b25;
+
+color:white;
+
+}
+
+
+
+.loginBox button{
+
+width:100%;
+
+padding:20px;
+
+border-radius:30px;
+
+border:none;
+
+background:
+
+linear-gradient(
+90deg,
+#602cff,
+#00c6ff
+);
+
+color:white;
+
+font-size:20px;
+
+}
+
+
+
+
+
+/* ================= APP ================= */
+
+
+.app{
+
+height:100vh;
+
+display:flex;
+
+gap:20px;
+
+padding:20px;
+
+overflow:hidden;
+
+}
+
+
+
+
+
+.sidebar{
+
+width:230px;
+
+background:#080d26;
+
+border-radius:30px;
+
+padding:25px;
+
+}
+
+
+
+.sidebar button{
+
+width:100%;
+
+padding:17px;
+
+margin:12px 0;
+
+border:none;
+
+border-radius:20px;
+
+background:#111638;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+
+
+
+.fullPage{
+
+flex:1;
+
+height:100%;
+
+overflow:auto;
+
+background:transparent;
+
+}
+
+
+
+
+
+
+/* ================= DASHBOARD ================= */
+
 
 .dashboardGrid{
 
@@ -16,17 +303,9 @@ gap:20px;
 
 
 
-/* LEFT */
+
 
 .leftArea{
-
-height:100%;
-
-}
-
-
-
-.interviewWrapper{
 
 height:100%;
 
@@ -34,21 +313,43 @@ display:flex;
 
 flex-direction:column;
 
-gap:15px;
+justify-content:flex-start;
 
 }
 
 
 
+.interviewWrapper{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+
+
+
+
+/* AI PANEL */
+
+
 .interviewBox{
 
+
 height:70vh;
+
+width:100%;
+
 
 display:grid;
 
 grid-template-columns:
 
 45% 55%;
+
 
 background:
 
@@ -58,12 +359,17 @@ linear-gradient(
 #111b55
 );
 
+
 border-radius:35px;
+
 
 padding:25px;
 
+
 box-shadow:
+
 0 0 40px #5428ff;
+
 
 }
 
@@ -85,15 +391,23 @@ justify-content:center;
 
 .avatarBox img{
 
+
 height:85%;
 
+
+max-width:100%;
+
+
 object-fit:contain;
+
+
 
 filter:
 
 drop-shadow(
 0 0 40px #5428ff
 );
+
 
 }
 
@@ -102,13 +416,22 @@ drop-shadow(
 
 .chatBox{
 
+
 height:100%;
+
 
 background:#080d26;
 
+
 border-radius:30px;
 
+
 padding:20px;
+
+
+display:flex;
+
+flex-direction:column;
 
 }
 
@@ -116,7 +439,75 @@ padding:20px;
 
 
 
-/* BELOW ROBOT */
+.messages{
+
+flex:1;
+
+overflow:auto;
+
+}
+
+
+
+
+.aiMsg{
+
+background:#5428ff;
+
+padding:18px;
+
+border-radius:25px;
+
+margin:10px;
+
+}
+
+
+
+
+.userMsg{
+
+background:#087f8c;
+
+padding:18px;
+
+border-radius:25px;
+
+margin:10px;
+
+}
+
+
+
+
+button{
+
+background:
+
+linear-gradient(
+90deg,
+#602cff,
+#00c6ff
+);
+
+color:white;
+
+border:none;
+
+padding:15px;
+
+border-radius:25px;
+
+cursor:pointer;
+
+}
+
+
+
+
+
+/* MINI CARDS BELOW */
+
 
 .bottomMini{
 
@@ -126,11 +517,9 @@ grid-template-columns:
 
 1fr 1fr;
 
-gap:15px;
+gap:18px;
 
 }
-
-
 
 
 
@@ -139,11 +528,10 @@ gap:15px;
 
 background:
 
-linear-gradient(
-135deg,
-#111638,
-#252cff
-);
+rgba(255,255,255,0.08);
+
+
+backdrop-filter:blur(20px);
 
 
 border-radius:30px;
@@ -156,21 +544,6 @@ box-shadow:
 
 0 0 25px #5428ff;
 
-}
-
-
-
-.miniCard p{
-
-color:#d9ddff;
-
-}
-
-
-
-.miniCard button{
-
-width:100%;
 
 }
 
@@ -199,22 +572,180 @@ gap:20px;
 
 .bigAnalysis{
 
+
 height:55%;
+
+
+background:#080d26;
+
+
+border-radius:30px;
+
+
+padding:30px;
+
+
+box-shadow:
+
+0 0 35px #312cff;
+
 
 }
 
+
+
+
+.bigScore{
+
+font-size:90px;
+
+text-align:center;
+
+color:#00ffff;
+
+}
+
+
+
+
+
+.cards{
+
+display:grid;
+
+grid-template-columns:
+
+1fr 1fr;
+
+gap:15px;
+
+}
+
+
+
+.cards div{
+
+background:#151a4b;
+
+padding:20px;
+
+border-radius:25px;
+
+}
+
+
+
+
+
+/* BOOST */
 
 
 .boostPanel{
 
+
 height:40%;
 
+
+background:
+
+linear-gradient(
+135deg,
+#5428ff,
+#00c6ff
+);
+
+
+border-radius:30px;
+
+
+padding:25px;
+
+
 }
+
+
+
+.boostItem{
+
+background:
+
+rgba(255,255,255,0.2);
+
+padding:18px;
+
+border-radius:20px;
+
+margin:12px 0;
+
+}
+
+
+
+
+
+/* REPORT */
+
+
+.reportPage{
+
+height:90vh;
+
+background:
+
+linear-gradient(
+135deg,
+#5428ff,
+#071a3d
+);
+
+border-radius:35px;
+
+padding:40px;
+
+}
+
+
+
+
+.finalScore{
+
+font-size:120px;
+
+text-align:center;
+
+color:#00ffff;
+
+}
+
+
+
+
+/* SETTINGS */
+
+.bigPage{
+
+height:90vh;
+
+background:#080d26;
+
+border-radius:30px;
+
+padding:40px;
+
+}
+
 
 
 
 
 @media(max-width:1000px){
+
+
+.loginPage{
+
+flex-direction:column;
+
+}
 
 
 .dashboardGrid{
@@ -229,5 +760,15 @@ grid-template-columns:1fr;
 grid-template-columns:1fr;
 
 }
+
+
+.interviewBox{
+
+grid-template-columns:1fr;
+
+height:auto;
+
+}
+
 
 }
