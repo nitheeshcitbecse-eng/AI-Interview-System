@@ -14,24 +14,16 @@ import "../App.css";
 export default function Dashboard(){
 
 
-const [page,setPage] = useState("dashboard");
+const [page,setPage]=useState("dashboard");
 
 
-const [report,setReport] = useState({
+const [report,setReport]=useState({
 
 overall:0,
-
 communication:0,
-
 technical:0,
-
 confidence:0,
-
-clarity:0,
-
-strengths:[],
-
-improve:[]
+clarity:0
 
 });
 
@@ -56,14 +48,15 @@ return(
 page==="dashboard" &&
 
 
-<>
-
-
 <div className="dashboardGrid">
 
 
 
-<div className="leftSide">
+<div className="leftArea">
+
+
+
+<div className="interviewWrapper">
 
 
 <AIAvatar
@@ -73,12 +66,84 @@ setReport={setReport}
 />
 
 
+
+<div className="bottomMini">
+
+
+
+<div className="miniCard">
+
+
+<h1>
+📄 Resume Analyzer
+</h1>
+
+
+<p>
+AI checks your resume strength and skills.
+</p>
+
+
+<button
+
+onClick={()=>setPage("resume")}
+
+>
+
+Open Resume
+
+</button>
+
+
 </div>
 
 
 
 
-<div className="rightSide">
+
+<div className="miniCard">
+
+
+<h1>
+⚙ Settings
+</h1>
+
+
+<p>
+Manage camera, mic and interview setup.
+</p>
+
+
+
+<button
+
+onClick={()=>setPage("settings")}
+
+>
+
+Open Settings
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div className="rightArea">
 
 
 
@@ -90,21 +155,16 @@ report={report}
 
 
 
+
 <BoostPanel/>
 
 
 
-
 </div>
 
 
 
 </div>
-
-
-
-</>
-
 
 }
 
@@ -127,14 +187,9 @@ page==="resume" &&
 
 page==="report" &&
 
-<ReportCard
-
-report={report}
-
-/>
+<ReportCard report={report}/>
 
 }
-
 
 
 
@@ -150,13 +205,10 @@ page==="settings" &&
 
 
 
-
 </div>
 
 
-
 </div>
-
 
 )
 
