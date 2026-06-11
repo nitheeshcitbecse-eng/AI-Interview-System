@@ -1,20 +1,27 @@
-import {Routes,Route} from "react-router-dom";
+import {
+Routes,
+Route
+} from "react-router-dom";
+
 
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 
 
-export default function App(){
+
+function App(){
 
 
 return(
 
 <Routes>
 
-<Route 
+
+<Route
 path="/"
 element={<Login/>}
 />
+
 
 
 <Route
@@ -28,3 +35,6 @@ element={<Dashboard/>}
 )
 
 }
+
+
+export default App;
