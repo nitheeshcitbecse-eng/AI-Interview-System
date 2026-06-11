@@ -1,37 +1,51 @@
-function ReportCard(){
+export default function ReportCard(){
 
 return(
 
 <div className="card">
 
-<h2>Interview Report</h2>
+
+<h2>
+Interview Report Card
+</h2>
 
 
-<h1>
-87/100
+<h1 className="big">
+87
 </h1>
 
 
 <p>
-Communication ⭐⭐⭐⭐⭐
+Excellent Performance ⭐⭐⭐⭐⭐
 </p>
 
-<p>
-Technical ⭐⭐⭐⭐
-</p>
+
+<hr/>
+
 
 <p>
-Improve:
-Answer structure,
-confidence,
-real examples
+✔ Good Technical Knowledge
 </p>
+
+
+<p>
+✔ Clear Communication
+</p>
+
+
+<p>
+⚠ Improve Real Examples
+</p>
+
+
+<button>
+Download Report
+</button>
 
 
 </div>
 
+
 )
 
 }
-
-export default ReportCard;
