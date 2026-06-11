@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import "../App.css";
 
 
@@ -9,37 +9,79 @@ const user=localStorage.getItem("user");
 
 const questions=[
 
-"Tell me about yourself",
+{
+q:"Tell me about yourself and your background.",
+type:"communication"
+},
 
-"Why do you want this field?",
+{
+q:"Why did you choose Artificial Intelligence and Machine Learning?",
+type:"technical"
+},
 
-"What are your technical skills?",
+{
+q:"Explain your recent project.",
+type:"technical"
+},
 
-"Explain your recent project",
+{
+q:"What are your strengths and weaknesses?",
+type:"communication"
+},
 
-"What are your strengths?"
+{
+q:"Where do you see yourself after 5 years?",
+type:"confidence"
+}
 
 ];
 
 
-const [index,setIndex]=useState(0);
+const [current,setCurrent]=useState(0);
+
 const [answer,setAnswer]=useState("");
-const [score,setScore]=useState(0);
+
+const [scores,setScores]=useState({
+
+confidence:70,
+communication:70,
+technical:70,
+clarity:70
+
+});
 
 
-function speak(){
-
-let speech=new SpeechSynthesisUtterance(
-questions[index]
+const [status,setStatus]=useState(
+"Ready for interview"
 );
 
-speechSynthesis.speak(speech);
+
+
+useEffect(()=>{
+
+speak(
+`Hi ${user}. Welcome back. ${questions[0].q}`
+)
+
+},[]);
+
+
+
+function speak(text){
+
+let speech=new SpeechSynthesisUtterance(text);
+
+speech.rate=0.9;
+
+speech.pitch=1;
+
+window.speechSynthesis.speak(speech);
 
 }
 
 
 
-function listen(){
+function startListening(){
 
 
 let SpeechRecognition=
@@ -47,45 +89,156 @@ window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
 
+
 if(!SpeechRecognition){
 
-alert("Browser does not support voice");
+alert("Use Chrome browser");
 
 return;
 
 }
 
 
-let rec=new SpeechRecognition();
+
+let recognition=new SpeechRecognition();
 
 
-rec.start();
+recognition.lang="en-US";
+
+recognition.start();
 
 
-rec.onresult=(e)=>{
+setStatus("Listening...");
 
 
-let text=e.results[0][0].transcript;
+recognition.onresult=(event)=>{
+
+
+let text =
+event.results[0][0].transcript;
+
+
 
 setAnswer(text);
 
-setScore(score+10);
+analyze(text);
+
+
+};
+
+
+
+recognition.onend=()=>{
+
+setStatus("Processing answer...");
+
+}
 
 
 }
 
 
+
+function analyze(text){
+
+
+let words=text.toLowerCase().split(" ");
+
+
+let lengthScore =
+Math.min(90,50+words.length);
+
+
+let technicalBonus =
+(
+words.includes("python") ||
+words.includes("machine") ||
+words.includes("ai") ||
+words.includes("project")
+)
+?15:0;
+
+
+
+setScores(prev=>({
+
+confidence:
+Math.min(
+95,
+prev.confidence+5
+),
+
+
+communication:
+Math.min(
+95,
+prev.communication+lengthScore/10
+),
+
+
+technical:
+Math.min(
+95,
+prev.technical+technicalBonus
+),
+
+
+clarity:
+Math.min(
+95,
+prev.clarity+5
+)
+
+}));
+
+
+
+// next question
+
+setTimeout(()=>{
+
+
+let next =
+current+1;
+
+
+
+if(next < questions.length){
+
+
+setCurrent(next);
+
+setAnswer("");
+
+speak(
+questions[next].q
+);
+
+
 }
 
 
+else{
 
-function next(){
+
+speak(
+"Interview completed. Generating your report."
+);
 
 
-setIndex((index+1)%questions.length);
+setStatus("Completed");
 
 
 }
+
+
+},2000);
+
+
+
+}
+
+
 
 
 
@@ -94,43 +247,95 @@ return(
 <div className="interview">
 
 
+<div className="avatar">
+
 <img src="/src/assets/hero.png"/>
+
+</div>
+
 
 
 <div className="chat">
 
 
 <h2>
-Hi {user} 👋
+AI Interviewer
 </h2>
 
 
 <h3>
-{questions[index]}
+Hi {user} 👋
 </h3>
 
 
-<p>{answer}</p>
+
+<div className="question">
+
+{questions[current].q}
+
+</div>
 
 
-<button onClick={speak}>
-🔊 Ask
+
+<p className="status">
+
+{status}
+
+</p>
+
+
+
+<div className="answer">
+
+{answer || "Your answer will appear here..."}
+
+</div>
+
+
+
+<button onClick={()=>speak(questions[current].q)}>
+🔊 Ask Question
 </button>
 
 
-<button onClick={listen}>
-🎤 Answer
+<button onClick={startListening}>
+🎤 Speak Answer
 </button>
 
 
-<button onClick={next}>
-Next
-</button>
+
+<div className="analysis">
 
 
-<h3>
-Score : {score}/100
-</h3>
+<h3>Live Analysis</h3>
+
+
+<p>
+Confidence:
+{Math.round(scores.confidence)}%
+</p>
+
+
+<p>
+Communication:
+{Math.round(scores.communication)}%
+</p>
+
+
+<p>
+Technical:
+{Math.round(scores.technical)}%
+</p>
+
+
+<p>
+Clarity:
+{Math.round(scores.clarity)}%
+</p>
+
+
+</div>
+
 
 
 </div>

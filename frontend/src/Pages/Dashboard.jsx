@@ -1,39 +1,37 @@
+import Sidebar from "../components/Sidebar";
 import AIAvatar from "../components/AIAvatar";
+import LiveAnalysis from "../components/LiveAnalysis";
 import ResumeAnalyzer from "../components/ResumeAnalyzer";
 import ReportCard from "../components/ReportCard";
 import SettingsPanel from "../components/SettingsPanel";
-
 import "../App.css";
 
 
-function Dashboard(){
-
+export default function Dashboard(){
 
 return(
 
-<div className="dashboard">
+<div className="app">
 
 
-<div className="sidebar">
+<Sidebar/>
 
-<h2>AI Interviewer</h2>
 
-<p>🏠 Home</p>
-<p>🎤 Mock Interview</p>
-<p>📄 Resume Analyzer</p>
-<p>📊 Report</p>
-<p>⚙ Settings</p>
+<div className="center">
+
+
+<div className="topbar">
+
+<h2>🔴 Live Interview</h2>
 
 </div>
 
 
-
-<div className="main">
-
-
 <AIAvatar/>
 
+
 <div className="bottom">
+
 
 <ResumeAnalyzer/>
 
@@ -41,19 +39,18 @@ return(
 
 <SettingsPanel/>
 
-
 </div>
 
 
 </div>
 
 
-</div>
 
+<LiveAnalysis/>
+
+
+</div>
 
 )
 
-
 }
-
-export default Dashboard;
