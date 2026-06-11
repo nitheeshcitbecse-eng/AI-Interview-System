@@ -7,51 +7,59 @@ return(
 
 
 <h1>
-🚀 AI Career Boost
+🚀 AI Career Zone
 </h1>
 
 
-<div>
-🔥 Interview Streak
+<div className="boostItem">
+
+🎯 Interview Progress
+
 <h2>
-5 Days
+Live Practice
 </h2>
+
 </div>
 
 
 
-<div>
-⚡ Top Skill
-<h2>
-React + AI
-</h2>
-</div>
+<div className="boostItem">
 
-
-
-<div>
-🏆 AI Tip
+🧠 AI Tips
 
 <p>
-Explain projects using problem → solution → result format.
+Use examples while answering questions
 </p>
 
 </div>
 
 
 
-<div>
-💎 Next Goal
+<div className="boostItem">
+
+⭐ Skills Detected
 
 <p>
-Improve technical depth and confidence.
+Java • React • AI • Problem Solving
 </p>
 
 </div>
 
 
 
+<div className="boostItem">
+
+🔥 Ready Level
+
+<h2>
+Placement Mode
+</h2>
+
 </div>
+
+
+</div>
+
 
 )
 
