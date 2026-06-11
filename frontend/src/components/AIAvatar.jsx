@@ -94,7 +94,7 @@ return(
 <div className="interview">
 
 
-<img src="/hero.png"/>
+<img src="/src/assets/hero.png"/>
 
 
 <div className="chat">
