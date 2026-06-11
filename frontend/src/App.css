@@ -6,105 +6,91 @@ box-sizing:border-box;
 body{
 
 margin:0;
-font-family:Arial;
-background:#05051b;
+background:#030617;
 color:white;
+font-family:Inter,Arial;
 
 }
 
 
+.app{
 
-.login{
-
-height:100vh;
 display:flex;
-justify-content:center;
-align-items:center;
-
-}
-
-
-form{
-
-background:#111133;
-padding:40px;
-border-radius:20px;
-
-}
-
-
-input{
-
-display:block;
+height:100vh;
+gap:15px;
 padding:15px;
-margin:15px;
-width:250px;
 
 }
-
-
-button{
-
-padding:12px 20px;
-margin:10px;
-border-radius:20px;
-background:#5b2cff;
-color:white;
-border:none;
-
-}
-
-
-
-.dashboard{
-
-display:flex;
-height:100vh;
-
-}
-
 
 
 .sidebar{
 
 width:230px;
-background:#090921;
-padding:20px;
+background:#080d26;
+border-radius:25px;
+padding:25px;
 
 }
 
 
-.sidebar p{
 
+.sidebar div{
+
+padding:15px;
+margin:8px 0;
+border-radius:15px;
+
+}
+
+
+
+.active{
+
+background:#4728ff;
+
+}
+
+
+
+.center{
+
+flex:1;
+
+}
+
+
+
+.topbar{
+
+height:60px;
+background:#080d26;
+border-radius:20px;
 padding:15px;
 
 }
 
 
 
-.main{
-
-flex:1;
-padding:20px;
-
-}
-
-
 .interview{
 
-height:55%;
+height:55vh;
+
+background:#080d26;
+
+border-radius:25px;
+
 display:flex;
-background:#11113a;
-border-radius:20px;
+
 padding:20px;
 
 }
 
 
-.interview img{
 
-width:45%;
-object-fit:contain;
+.avatar img{
+
+height:100%;
+max-width:450px;
 
 }
 
@@ -112,35 +98,102 @@ object-fit:contain;
 
 .chat{
 
-padding:30px;
+padding:20px;
+flex:1;
 
 }
+
+
+
+.question{
+
+background:#202060;
+padding:20px;
+border-radius:20px;
+
+}
+
+
+
+button{
+
+background:#602cff;
+border:none;
+padding:12px 25px;
+border-radius:20px;
+color:white;
+margin:10px;
+
+}
+
 
 
 .bottom{
 
 display:flex;
-gap:20px;
+gap:15px;
 
 }
 
 
+
 .card{
 
-background:#11113a;
+background:#080d26;
 padding:20px;
-margin-top:20px;
 border-radius:20px;
 flex:1;
 
 }
 
 
+
+.upload{
+
+border:2px dashed #5335ff;
+padding:25px;
+border-radius:15px;
+
+}
+
+
+
 span{
 
-background:#4825ff;
-padding:5px;
-margin:5px;
+background:#3220ff;
+padding:6px;
 border-radius:10px;
+margin:4px;
+
+}
+
+
+
+.analysisPanel{
+
+width:300px;
+background:#080d26;
+border-radius:25px;
+padding:20px;
+
+}
+
+
+
+.score{
+
+background:#12183a;
+padding:15px;
+margin:10px;
+border-radius:15px;
+
+}
+
+
+
+.wave{
+
+font-size:40px;
+color:#5f4cff;
 
 }

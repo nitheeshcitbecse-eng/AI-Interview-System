@@ -1,28 +1,38 @@
-function SettingsPanel(){
+export default function SettingsPanel(){
 
 return(
 
 <div className="card">
 
 
-<h2>Settings</h2>
+<h2>
+Settings
+</h2>
 
-
-<p>Voice : Female</p>
 
 <p>
-Speech Speed : Normal
+🎤 Voice: Female
 </p>
 
+
 <p>
-Camera : ON
+Speed: Normal
+</p>
+
+
+<p>
+Language: English
+</p>
+
+
+<p>
+Camera: ON
 </p>
 
 
 </div>
 
+
 )
 
 }
-
-export default SettingsPanel;
