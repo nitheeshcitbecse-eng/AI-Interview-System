@@ -1,82 +1,200 @@
-export default function ReportCard(){
-
-return(
-
-<div className="report">
+*{
+box-sizing:border-box;
+}
 
 
-<h2>
-🏆 Interview Report
-</h2>
+body{
+
+margin:0;
+background:#030617;
+color:white;
+font-family:Inter,Arial;
+
+}
 
 
-<div className="circle">
-87
-</div>
+.app{
+
+display:flex;
+height:100vh;
+gap:15px;
+padding:15px;
+
+}
 
 
-<h3>
-Excellent Performance
-</h3>
+.sidebar{
 
+width:230px;
+background:#080d26;
+border-radius:25px;
+padding:25px;
 
-
-<div className="bars">
-
-<p>
-Technical Skills
-<span style={{width:"85%"}}></span>
-</p>
-
-
-<p>
-Communication
-<span style={{width:"90%"}}></span>
-</p>
-
-
-<p>
-Confidence
-<span style={{width:"80%"}}></span>
-</p>
+}
 
 
 
-</div>
+.sidebar div{
+
+padding:15px;
+margin:8px 0;
+border-radius:15px;
+
+}
 
 
 
-<div className="feedback">
+.active{
 
-<h3>
-Strengths
-</h3>
+background:#4728ff;
 
-<p>
-✔ Good explanation ability</p>
-
-<p>
-✔ Problem solving</p>
+}
 
 
-<h3>
-Improve
-</h3>
 
-<p>
-⚠ Give more examples</p>
+.center{
 
-<p>
-⚠ Explain projects deeper</p>
+flex:1;
+
+}
 
 
-</div>
+
+.topbar{
+
+height:60px;
+background:#080d26;
+border-radius:20px;
+padding:15px;
+
+}
 
 
-</div>
+
+.interview{
+
+height:55vh;
+
+background:#080d26;
+
+border-radius:25px;
+
+display:flex;
+
+padding:20px;
+
+}
 
 
-)
+
+.avatar img{
+
+height:100%;
+max-width:450px;
+
+}
+
+
+
+.chat{
+
+padding:20px;
+flex:1;
+
+}
+
+
+
+.question{
+
+background:#202060;
+padding:20px;
+border-radius:20px;
+
+}
+
+
+
+button{
+
+background:#602cff;
+border:none;
+padding:12px 25px;
+border-radius:20px;
+color:white;
+margin:10px;
+
+}
+
+
+
+.bottom{
+
+display:flex;
+gap:15px;
+
+}
+
+
+
+.card{
+
+background:#080d26;
+padding:20px;
+border-radius:20px;
+flex:1;
+
+}
+
+
+
+.upload{
+
+border:2px dashed #5335ff;
+padding:25px;
+border-radius:15px;
+
+}
+
+
+
+span{
+
+background:#3220ff;
+padding:6px;
+border-radius:10px;
+margin:4px;
+
+}
+
+
+
+.analysisPanel{
+
+width:300px;
+background:#080d26;
+border-radius:25px;
+padding:20px;
+
+}
+
+
+
+.score{
+
+background:#12183a;
+padding:15px;
+margin:10px;
+border-radius:15px;
+
+}
+
+
+
+.wave{
+
+font-size:40px;
+color:#5f4cff;
 
 }
 .report{

@@ -41,7 +41,7 @@ ai:`Hi ${user} 👋. Let's start your interview. ${questions[0]}`
 const [listening,setListening]=useState(false);
 
 
-const [score,setScore]=useState({
+const [answers,setAnswers]=useState({
 
 confidence:70,
 technical:70,
