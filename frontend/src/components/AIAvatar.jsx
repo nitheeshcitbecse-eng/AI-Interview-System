@@ -6,43 +6,42 @@ import "../App.css";
 export default function AIAvatar({setReport}){
 
 
-const questions=[
-
-"Tell me about yourself.",
-
-"Why did you choose this career?",
-
-"Explain your project.",
-
-"What are your technical skills?",
-
-"What is your biggest strength?"
-
-];
-
-
-const [index,setIndex]=useState(0);
-
-const [listening,setListening]=useState(false);
-
 const [messages,setMessages]=useState([
 {
-ai:questions[0]
+ai:"Hi 👋 Tell me about yourself."
 }
 ]);
 
 
+const [question,setQuestion]=useState(0);
 
-const [score,setScore]=useState({
+const [finished,setFinished]=useState(false);
 
-overall:50,
-technical:50,
+
+const [scores,setScores]=useState({
+
 communication:50,
-confidence:50
+technical:50,
+confidence:50,
+clarity:50
 
 });
 
 
+
+const interviewQuestions=[
+
+"Tell me about yourself.",
+
+"Explain your recent project.",
+
+"What technologies did you use?",
+
+"What problem did your project solve?",
+
+"What are your strengths?"
+
+];
 
 
 
@@ -57,44 +56,37 @@ window.speechSynthesis.cancel();
 
 window.speechSynthesis.speak(speech);
 
-
 }
 
 
 
-
-function startInterview(){
+function start(){
 
 
 speak(
-questions[index]
+interviewQuestions[question]
 );
 
 
-startVoice();
-
+listen();
 
 }
 
 
 
 
-
-function startVoice(){
-
+function listen(){
 
 
-const SpeechRecognition =
+let Recognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
 
 
-if(!SpeechRecognition){
+if(!Recognition){
 
-alert(
-"Please open in Chrome and allow microphone"
-);
+alert("Use Chrome browser");
 
 return;
 
@@ -102,27 +94,20 @@ return;
 
 
 
-let recognition =
-new SpeechRecognition();
+let rec=new Recognition();
+
+
+rec.lang="en-US";
+
+rec.start();
 
 
 
-recognition.lang="en-US";
+rec.onresult=(e)=>{
 
 
-recognition.start();
-
-
-
-setListening(true);
-
-
-
-recognition.onresult=(event)=>{
-
-
-let text =
-event.results[0][0].transcript;
+let answer =
+e.results[0][0].transcript;
 
 
 
@@ -131,24 +116,15 @@ setMessages(prev=>[
 ...prev,
 
 {
-user:text
+user:answer
 }
 
 ]);
 
 
 
-analyse(text);
+analyse(answer);
 
-
-
-};
-
-
-
-recognition.onend=()=>{
-
-setListening(false);
 
 };
 
@@ -158,74 +134,152 @@ setListening(false);
 
 
 
-
-function analyse(text){
-
+function analyse(answer){
 
 
-let t=text.toLowerCase();
+let text=answer.toLowerCase();
 
 
-let newScore={...score};
+let newScore={...scores};
 
 
 
-if(text.length>80){
+// communication
 
+if(answer.length>80)
 newScore.communication+=15;
+
+else
+newScore.communication-=5;
+
+
+
+// technical detection
+
+let tech=[
+
+"java",
+"python",
+"react",
+"javascript",
+"ai",
+"machine learning",
+"sql"
+
+];
+
+
+tech.forEach(word=>{
+
+if(text.includes(word)){
+
+newScore.technical+=10;
+
+}
+
+});
+
+
+
+// confidence
+
+if(
+text.includes("created") ||
+text.includes("built") ||
+text.includes("developed")
+){
 
 newScore.confidence+=10;
 
 }
 
-else{
-
-newScore.communication-=5;
-
-}
 
 
-
-if(
-t.includes("java")||
-t.includes("python")||
-t.includes("react")||
-t.includes("ai")
-){
-
-newScore.technical+=15;
-
-}
-
-
-
-newScore.overall=Math.round(
-
-(
-newScore.communication+
-newScore.technical+
-newScore.confidence
-)/3
-
+newScore.clarity =
+Math.min(
+90,
+newScore.communication
 );
 
 
 
-setScore(newScore);
+setScores(newScore);
 
 
 
-setReport(newScore);
+
+
+// FOLLOW UP LOGIC
+
+
+let nextQuestion="";
 
 
 
-let next =
-questions[index+1] ||
-"Interview completed. Great work.";
+if(text.includes("project")){
 
 
+nextQuestion=
+"What was your role in that project?";
 
-setIndex(index+1);
+
+}
+
+else if(text.includes("react")){
+
+
+nextQuestion=
+"Why did you choose React?";
+
+
+}
+
+else if(text.includes("java")){
+
+
+nextQuestion=
+"Explain one Java concept you know.";
+
+}
+
+
+else if(answer.length<30){
+
+
+nextQuestion=
+"Can you explain that with more details?";
+
+
+}
+
+
+else{
+
+
+let next=question+1;
+
+
+if(next>=interviewQuestions.length){
+
+
+finishInterview(newScore);
+
+return;
+
+
+}
+
+
+setQuestion(next);
+
+
+nextQuestion=
+interviewQuestions[next];
+
+
+}
+
+
 
 
 
@@ -237,18 +291,94 @@ setMessages(prev=>[
 ...prev,
 
 {
-ai:next
+ai:nextQuestion
+}
+
+]);
+
+speak(nextQuestion);
+
+
+},1200);
+
+
+
+}
+
+
+
+
+function finishInterview(finalScore){
+
+
+
+let total=Math.round(
+
+(
+finalScore.communication+
+finalScore.technical+
+finalScore.confidence+
+finalScore.clarity
+
+)/4
+
+);
+
+
+
+setFinished(true);
+
+
+
+setReport({
+
+overall:total,
+
+...finalScore,
+
+
+strengths:
+
+total>70
+?
+[
+"Good communication",
+"Good technical explanation"
+]
+:
+[],
+
+
+improve:
+
+total<70
+?
+[
+"Give detailed answers",
+"Explain projects better"
+]
+:
+[]
+
+});
+
+
+
+setMessages(prev=>[
+
+...prev,
+
+{
+ai:"🎉 Interview completed. Your report is ready."
 }
 
 ]);
 
 
 
-speak(next);
-
-
-
-},1200);
+speak(
+"Interview completed. Your report is ready."
+);
 
 
 
@@ -265,9 +395,7 @@ return(
 
 <div className="avatarBox">
 
-
 <img src={hero}/>
-
 
 </div>
 
@@ -301,14 +429,12 @@ m.ai &&
 }
 
 
-
 {
 m.user &&
 <p className="userMsg">
 👤 {m.user}
 </p>
 }
-
 
 
 </div>
@@ -323,27 +449,25 @@ m.user &&
 
 
 
-<button onClick={startInterview}>
+<button onClick={start} disabled={finished}>
 
-🎤 Start Speaking
+🎤 Speak Answer
 
 </button>
 
 
 
 {
-listening &&
-
-<h2 className="listen">
-
-🎙 Listening...
-
+finished &&
+<h2>
+✅ Report Generated
 </h2>
-
 }
 
 
+
 </div>
+
 
 
 
@@ -351,33 +475,43 @@ listening &&
 
 
 <h2>
-Live Rank Card
+LIVE SCORE
 </h2>
 
 
 <h1>
-{score.overall}/100
+{
+Math.round(
+(
+scores.communication+
+scores.technical+
+scores.confidence+
+scores.clarity
+)/4
+)
+}
+/100
 </h1>
 
 
 <p>
-Communication {score.communication}%
+Communication : {scores.communication}%
 </p>
-
 
 <p>
-Technical {score.technical}%
+Technical : {scores.technical}%
 </p>
-
 
 <p>
-Confidence {score.confidence}%
+Confidence : {scores.confidence}%
 </p>
 
+<p>
+Clarity : {scores.clarity}%
+</p>
 
 
 </div>
-
 
 
 </div>
