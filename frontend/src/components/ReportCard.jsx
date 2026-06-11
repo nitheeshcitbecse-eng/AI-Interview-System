@@ -3,82 +3,84 @@ export default function ReportCard({report}){
 
 return(
 
-<div className="report">
+<div className="reportPage">
 
 
-<h2>🏆 Interview Report</h2>
+<h1>
+🏆 Interview Rank Card
+</h1>
 
 
-<div className="circle">
 
-{report.overall || "--"}
+<div className="finalScore">
+
+{report.overall || 0}
+
+</div>
+
+
+<h2>
+Score / 100
+</h2>
+
+
+
+<div className="reportGrid">
+
+
+<div>
+<h3>Communication</h3>
+<h1>{report.communication || 0}%</h1>
+</div>
+
+
+
+<div>
+<h3>Technical</h3>
+<h1>{report.technical || 0}%</h1>
+</div>
+
+
+
+<div>
+<h3>Confidence</h3>
+<h1>{report.confidence || 0}%</h1>
+</div>
+
+
+
+<div>
+<h3>Clarity</h3>
+<h1>{report.clarity || 0}%</h1>
+</div>
+
 
 </div>
 
 
 
-<h3>
 
-{
-report.overall>80
-?"Excellent Performance ⭐"
-:
-report.overall>60
-?"Good Performance 👍"
-:
-"Needs Improvement ⚠️"
-
-}
-
-</h3>
-
-
-
-<h4>
-Technical: {report.technical}%
-</h4>
-
-
-<h4>
-Communication: {report.communication}%
-</h4>
-
-
-<h4>
-Confidence: {report.confidence}%
-</h4>
-
-
-<h4>
-Clarity: {report.clarity}%
-</h4>
-
-
-
-<hr/>
-
-
-<h3>
+<h2>
 Strengths
-</h3>
+</h2>
 
 
 {
-report.strengths.map((s,i)=>
-<p key={i}>✔ {s}</p>
+report.strengths?.map((x,i)=>
+<p key={i}>✔ {x}</p>
 )
 }
 
 
 
-<h3>
-Areas To Improve
-</h3>
+<h2>
+Improve
+</h2>
 
 
 {
-report.improve.map((s,i)=>
-<p key={i}>⚠ {s}</p>
+report.improve?.map((x,i)=>
+<p key={i}>⚠ {x}</p>
 )
 }
 

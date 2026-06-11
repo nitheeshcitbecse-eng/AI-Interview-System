@@ -11,6 +11,7 @@ return(
 </h2>
 
 
+
 <button onClick={()=>setPage("dashboard")}>
 🏠 Dashboard
 </button>
@@ -22,7 +23,7 @@ return(
 
 
 <button onClick={()=>setPage("report")}>
-📊 Report Card
+🏆 Report Card
 </button>
 
 

@@ -6,20 +6,41 @@ import "../App.css";
 export default function AIAvatar({setReport}){
 
 
+const questions=[
+
+"Tell me about yourself.",
+
+"Why did you choose this career field?",
+
+"Explain your project.",
+
+"What technologies did you use?",
+
+"What challenges did you face?",
+
+"What are your strengths?"
+
+];
+
+
+
+const [current,setCurrent]=useState(0);
+
+
 const [messages,setMessages]=useState([
 {
-ai:"Hi 👋 Tell me about yourself."
+type:"ai",
+text:"Hello 👋 Tell me about yourself."
 }
 ]);
 
 
-const [question,setQuestion]=useState(0);
-
-const [finished,setFinished]=useState(false);
+const [listening,setListening]=useState(false);
 
 
-const [scores,setScores]=useState({
+const [score,setScore]=useState({
 
+overall:50,
 communication:50,
 technical:50,
 confidence:50,
@@ -29,64 +50,61 @@ clarity:50
 
 
 
-const interviewQuestions=[
-
-"Tell me about yourself.",
-
-"Explain your recent project.",
-
-"What technologies did you use?",
-
-"What problem did your project solve?",
-
-"What are your strengths?"
-
-];
-
-
-
 function speak(text){
 
 
-let speech=new SpeechSynthesisUtterance(text);
+const speech =
+new SpeechSynthesisUtterance(text);
+
 
 speech.rate=0.9;
+
 
 window.speechSynthesis.cancel();
 
 window.speechSynthesis.speak(speech);
 
+
 }
 
 
 
-function start(){
+
+
+function startInterview(){
 
 
 speak(
-interviewQuestions[question]
+questions[current]
 );
 
 
-listen();
+setTimeout(()=>{
+
+startListening();
+
+},1500);
+
 
 }
 
 
 
 
-function listen(){
+function startListening(){
 
 
-let Recognition =
+const SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
 
 
-if(!Recognition){
+if(!SpeechRecognition){
 
-alert("Use Chrome browser");
+alert(
+"Please use Chrome and allow microphone"
+);
 
 return;
 
@@ -94,20 +112,36 @@ return;
 
 
 
-let rec=new Recognition();
-
-
-rec.lang="en-US";
-
-rec.start();
+const recognition =
+new SpeechRecognition();
 
 
 
-rec.onresult=(e)=>{
+recognition.lang="en-US";
+
+recognition.continuous=false;
+
+recognition.interimResults=false;
 
 
-let answer =
-e.results[0][0].transcript;
+
+recognition.start();
+
+
+
+recognition.onstart=()=>{
+
+setListening(true);
+
+};
+
+
+
+recognition.onresult=(event)=>{
+
+
+const answer =
+event.results[0][0].transcript;
 
 
 
@@ -116,17 +150,27 @@ setMessages(prev=>[
 ...prev,
 
 {
-user:answer
+type:"user",
+text:answer
 }
 
 ]);
 
 
 
-analyse(answer);
+analyseAnswer(answer);
 
 
 };
+
+
+
+recognition.onend=()=>{
+
+setListening(false);
+
+};
+
 
 
 }
@@ -134,29 +178,44 @@ analyse(answer);
 
 
 
-function analyse(answer){
+function analyseAnswer(answer){
 
 
-let text=answer.toLowerCase();
-
-
-let newScore={...scores};
+let text =
+answer.toLowerCase();
 
 
 
-// communication
+let newScore={
+...score
+};
 
-if(answer.length>80)
+
+
+
+// Communication
+
+if(answer.length>70){
+
 newScore.communication+=15;
+newScore.clarity+=10;
 
-else
+}
+
+else{
+
 newScore.communication-=5;
 
+}
 
 
-// technical detection
 
-let tech=[
+
+
+// Technical
+
+
+let skills=[
 
 "java",
 "python",
@@ -169,24 +228,31 @@ let tech=[
 ];
 
 
-tech.forEach(word=>{
 
-if(text.includes(word)){
+skills.forEach(skill=>{
+
+
+if(text.includes(skill)){
 
 newScore.technical+=10;
 
 }
 
+
 });
 
 
 
-// confidence
+
+// Confidence
+
 
 if(
-text.includes("created") ||
+
 text.includes("built") ||
+text.includes("created") ||
 text.includes("developed")
+
 ){
 
 newScore.confidence+=10;
@@ -195,24 +261,64 @@ newScore.confidence+=10;
 
 
 
-newScore.clarity =
-Math.min(
-90,
-newScore.communication
+
+newScore.overall=Math.round(
+
+(
+newScore.communication+
+newScore.technical+
+newScore.confidence+
+newScore.clarity
+
+)/4
+
 );
 
 
 
-setScores(newScore);
+setScore(newScore);
+
+
+
+setReport({
+
+...newScore,
+
+strengths:
+
+newScore.overall>70
+
+?
+[
+"Good communication",
+"Good technical knowledge"
+]
+
+:
+[],
+
+
+improve:
+
+newScore.overall<70
+
+?
+[
+"Give detailed answers",
+"Explain projects deeply"
+]
+
+:
+[]
+
+});
 
 
 
 
 
-// FOLLOW UP LOGIC
 
-
-let nextQuestion="";
+let nextQuestion;
 
 
 
@@ -220,7 +326,7 @@ if(text.includes("project")){
 
 
 nextQuestion=
-"What was your role in that project?";
+"Great. What was your role in that project?";
 
 
 }
@@ -229,7 +335,7 @@ else if(text.includes("react")){
 
 
 nextQuestion=
-"Why did you choose React?";
+"Why did you select React?";
 
 
 }
@@ -240,29 +346,25 @@ else if(text.includes("java")){
 nextQuestion=
 "Explain one Java concept you know.";
 
-}
-
-
-else if(answer.length<30){
-
-
-nextQuestion=
-"Can you explain that with more details?";
-
 
 }
-
 
 else{
 
 
-let next=question+1;
+let next=current+1;
 
 
-if(next>=interviewQuestions.length){
+
+if(next>=questions.length){
 
 
-finishInterview(newScore);
+nextQuestion=
+"Interview completed. Your report is generated.";
+
+
+speak(nextQuestion);
+
 
 return;
 
@@ -270,16 +372,14 @@ return;
 }
 
 
-setQuestion(next);
+
+setCurrent(next);
 
 
-nextQuestion=
-interviewQuestions[next];
-
+nextQuestion =
+questions[next];
 
 }
-
-
 
 
 
@@ -291,94 +391,19 @@ setMessages(prev=>[
 ...prev,
 
 {
-ai:nextQuestion
+type:"ai",
+text:nextQuestion
 }
 
 ]);
+
+
 
 speak(nextQuestion);
 
 
-},1200);
 
-
-
-}
-
-
-
-
-function finishInterview(finalScore){
-
-
-
-let total=Math.round(
-
-(
-finalScore.communication+
-finalScore.technical+
-finalScore.confidence+
-finalScore.clarity
-
-)/4
-
-);
-
-
-
-setFinished(true);
-
-
-
-setReport({
-
-overall:total,
-
-...finalScore,
-
-
-strengths:
-
-total>70
-?
-[
-"Good communication",
-"Good technical explanation"
-]
-:
-[],
-
-
-improve:
-
-total<70
-?
-[
-"Give detailed answers",
-"Explain projects better"
-]
-:
-[]
-
-});
-
-
-
-setMessages(prev=>[
-
-...prev,
-
-{
-ai:"🎉 Interview completed. Your report is ready."
-}
-
-]);
-
-
-
-speak(
-"Interview completed. Your report is ready."
-);
+},1000);
 
 
 
@@ -395,9 +420,15 @@ return(
 
 <div className="avatarBox">
 
-<img src={hero}/>
+
+<img
+src={hero}
+alt="AI"
+/>
+
 
 </div>
+
 
 
 
@@ -422,19 +453,29 @@ messages.map((m,i)=>(
 
 
 {
-m.ai &&
+m.type==="ai" &&
+
 <p className="aiMsg">
-🤖 {m.ai}
+
+🤖 {m.text}
+
 </p>
+
 }
+
 
 
 {
-m.user &&
+m.type==="user" &&
+
 <p className="userMsg">
-👤 {m.user}
+
+👤 {m.text}
+
 </p>
+
 }
+
 
 
 </div>
@@ -449,7 +490,8 @@ m.user &&
 
 
 
-<button onClick={start} disabled={finished}>
+
+<button onClick={startInterview}>
 
 🎤 Speak Answer
 
@@ -458,57 +500,52 @@ m.user &&
 
 
 {
-finished &&
-<h2>
-✅ Report Generated
-</h2>
+listening &&
+
+<h3 className="listen">
+
+🎙 Listening...
+
+</h3>
+
 }
+
+
+
+
+
+<div className="miniScore">
+
+
+<h2>
+Live Score
+</h2>
+
+
+<h1>
+{score.overall}/100
+</h1>
+
+
+<p>
+Communication {score.communication}%
+</p>
+
+
+<p>
+Technical {score.technical}%
+</p>
+
+
+<p>
+Confidence {score.confidence}%
+</p>
 
 
 
 </div>
 
 
-
-
-<div className="rankCard">
-
-
-<h2>
-LIVE SCORE
-</h2>
-
-
-<h1>
-{
-Math.round(
-(
-scores.communication+
-scores.technical+
-scores.confidence+
-scores.clarity
-)/4
-)
-}
-/100
-</h1>
-
-
-<p>
-Communication : {scores.communication}%
-</p>
-
-<p>
-Technical : {scores.technical}%
-</p>
-
-<p>
-Confidence : {scores.confidence}%
-</p>
-
-<p>
-Clarity : {scores.clarity}%
-</p>
 
 
 </div>
