@@ -18,29 +18,26 @@ function handleSubmit(e){
 
 e.preventDefault();
 
-
-if(username.trim()==="" || password.trim()===""){
-
-alert("Enter username and password");
-
-return;
-
-}
+console.log("SUBMIT CLICKED");
 
 
-localStorage.setItem(
-"user",
-username
-);
+if(username && password){
 
+localStorage.setItem("user",username);
 
-// OPEN DASHBOARD
+console.log("GOING DASHBOARD");
 
 navigate("/dashboard");
 
+}
+
+else{
+
+alert("Enter username and password");
 
 }
 
+}
 
 
 
