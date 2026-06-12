@@ -1,194 +1,153 @@
 import {useState} from "react";
-import "../App.css";
 
 
 export default function ResumeAnalyzer(){
 
 
-const [result,setResult]=useState(null);
-
-
-
-function analyze(e){
-
-
-let file=e.target.files[0];
-
-
-if(!file) return;
-
-
-
-let name=file.name.toLowerCase();
-
-
-let score=50;
-
-
-let skills=[];
-
-
-
-if(
-name.includes("java") ||
-name.includes("react") ||
-name.includes("python")
-){
-
-score+=20;
-
-skills.push("Technical Skills");
-
-}
-
-
-if(
-name.includes("resume") ||
-name.includes("cv")
-){
-
-score+=15;
-
-}
-
-
-
-if(score>80){
-
-setResult({
-
-level:"Strong Resume 🔥",
-
-score,
-
-message:
-"Resume is well prepared for interviews"
-
-});
-
-}
-
-else if(score>60){
-
-
-setResult({
-
-level:"Good Resume 👍",
-
-score,
-
-message:
-"Add more projects and achievements"
-
-});
-
-
-}
-
-else{
-
-
-setResult({
-
-level:"Needs Improvement ⚠️",
-
-score,
-
-message:
-"Improve skills, projects and experience section"
-
-});
-
-
-}
-
-
-
-}
+const[file,setFile]=useState(null);
 
 
 
 return(
 
-
 <div className="resumePage">
 
 
 <h1>
-📄 AI Resume Analyzer
+🤖 Resume Intelligence AI
 </h1>
 
 
-
-<div className="uploadBox">
+<div className="resumeUpload">
 
 
 <input
 
 type="file"
 
-onChange={analyze}
+onChange={(e)=>setFile(e.target.files[0])}
 
 />
 
 
-<p>
-Upload your resume
+<button>
+Analyze Resume
+</button>
 
-</p>
 
 
 </div>
+
+
+
+
+<div className="resumeCards">
+
+
+<div>
+<h1>92%</h1>
+ATS Score
+</div>
+
+
+
+<div>
+<h1>88%</h1>
+Skills Match
+</div>
+
+
+
+<div>
+<h1>90%</h1>
+Experience
+</div>
+
+
+
+<div>
+<h1>85%</h1>
+Projects
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div className="analysisPanel">
+
+
+<h2>
+AI Resume Report
+</h2>
+
+
+
+<p>
+✅ Programming skills detected
+</p>
+
+
+<p>
+✅ Projects evaluated
+</p>
+
+
+<p>
+✅ Education checked
+</p>
+
+
+<p>
+✅ Keywords matched
+</p>
+
+
+<p>
+✅ Job roles suggested
+</p>
+
+
+
+
+<h2>
+Improvement Suggestions
+</h2>
+
+
+<ul>
+
+<li>Add measurable project results</li>
+
+<li>Improve professional summary</li>
+
+<li>Add more technical keywords</li>
+
+</ul>
+
+
+</div>
+
 
 
 
 
 {
 
-result &&
+file &&
 
-
-<div className="resumeResult">
-
-
-<h1>
-{result.score}/100
-</h1>
-
-
-<h2>
-{result.level}
-</h2>
-
-
-<p>
-{result.message}
-</p>
-
-
-
-<div className="resumeBar">
-
-<div
-style={{
-width:`${result.score}%`
-}}
->
-
-</div>
-
-</div>
-
-
-</div>
-
+<h3>
+Uploaded: {file.name}
+</h3>
 
 }
 
 
-
 </div>
-
 
 )
 

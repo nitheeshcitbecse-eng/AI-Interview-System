@@ -1,128 +1,107 @@
-import {useState} from "react";
+const settings=[
+
+"📡 Network & Connectivity",
+
+"Wi-Fi",
+
+"Bluetooth",
+
+"Mobile Network & SIM",
+
+"Airplane Mode",
+
+"Hotspot & Tethering",
+
+"🖥 Display & Audio",
+
+"Brightness",
+
+"Light / Dark Mode",
+
+"Wallpaper",
+
+"Font Size",
+
+"🔊 Sound",
+
+"Volume",
+
+"Do Not Disturb",
+
+"🔐 Privacy & Security",
+
+"Accounts",
+
+"App Permissions",
+
+"App Lock",
+
+"🔋 Battery",
+
+"Storage",
+
+"Date & Time",
+
+"Language",
+
+"Accessibility",
+
+"Developer Options"
+
+
+];
 
 
 export default function SettingsPanel(){
 
 
-const [camera,setCamera]=useState(true);
-
-const [mic,setMic]=useState(true);
-
-const [speed,setSpeed]=useState(1);
-
-
-
 return(
 
-<div className="bigPage">
+<div className="settingsPage">
 
 
 <h1>
-⚙ Interview Settings
+⚙ Application Settings
 </h1>
 
 
-
-<div className="settingBox">
-
-
-<h2>
-Camera
-</h2>
-
-<button onClick={()=>setCamera(!camera)}>
-
-{camera?"ON":"OFF"}
-
-</button>
+{
 
 
-
-<h2>
-Microphone
-</h2>
+settings.map((item,i)=>(
 
 
-<button onClick={()=>setMic(!mic)}>
+<div
 
-{mic?"ON":"OFF"}
+className="settingItem"
 
-</button>
+key={i}
 
-
-
-<h2>
-AI Voice Speed
-</h2>
+>
 
 
-<input
-
-type="range"
-
-min="0.5"
-
-max="2"
-
-step="0.1"
-
-value={speed}
-
-onChange={
-e=>setSpeed(e.target.value)
-}
-
-/>
+{item}
 
 
-<h2>
-Language
-</h2>
-
-
-<select>
-
-<option>
-English
-</option>
-
-<option>
-Tamil
-</option>
-
-<option>
-Hindi
-</option>
-
-</select>
-
-
-
-<h2>
-Difficulty
-</h2>
-
-
-<select>
-
-<option>
-Beginner
-</option>
-
-<option>
-Intermediate
-</option>
-
-<option>
-Advanced
-</option>
-
-
-</select>
-
+<span>
+›
+</span>
 
 
 </div>
+
+
+))
+
+
+}
+
+
+
+<button className="logout">
+Logout
+</button>
+
 
 
 </div>

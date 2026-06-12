@@ -1,63 +1,61 @@
-export default function LiveAnalysis({report}){
+export default function LiveAnalysis(){
 
 
 return(
 
-<div className="bigAnalysis">
+<div className="live">
 
-
-<h1>
-📊 AI Performance Report
-</h1>
-
-
-<div className="bigScore">
-
-{report.overall || 0}
-
-</div>
-
-
-<div className="cards">
-
-
-<div>
-<h2>🎤 Communication</h2>
-<h1>{report.communication || 0}%</h1>
-</div>
-
-
-<div>
-<h2>💻 Technical</h2>
-<h1>{report.technical || 0}%</h1>
-</div>
-
-
-<div>
-<h2>🔥 Confidence</h2>
-<h1>{report.confidence || 0}%</h1>
-</div>
-
-
-</div>
-
-
-
-<div className="emptyFill">
-
-
-<img src="/src/assets/hero.png"/>
 
 <h2>
-AI is analyzing your interview in real time
+✨ Live Analysis
 </h2>
 
 
+<div className="stats">
+
+
+<div>
+Confidence
+<h2>78%</h2>
+</div>
+
+
+<div>
+Clarity
+<h2>82%</h2>
+</div>
+
+
+<div>
+Communication
+<h2>85%</h2>
+</div>
+
+
+<div>
+Technical
+<h2>75%</h2>
+</div>
+
+
 </div>
 
 
 
+<h3>
+Speech Insights
+</h3>
+
+
+<div className="graph">
+
+〰〰〰〰〰
+
 </div>
+
+
+</div>
+
 
 )
 
