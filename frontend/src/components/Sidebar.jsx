@@ -1,86 +1,112 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Sidebar(){
 
+
 const navigate = useNavigate();
 
 
-return(
+
+return (
 
 <div className="side">
 
 
 <h2>
-✦ AI Interviewer
+🤖 AI Interviewer
 </h2>
 
 
-<button onClick={()=>navigate("/dashboard")}>
+
+<button
+onClick={()=>navigate("/dashboard")}
+>
 🏠 Home
 </button>
 
 
-<button>
-💬 Mock Interview
+
+<button
+onClick={()=>navigate("/mock")}
+>
+🎤 Mock Interview
 </button>
 
 
 
-<button onClick={()=>navigate("/resume")}>
+
+<button
+onClick={()=>navigate("/resume")}
+>
 📄 Resume Analyzer
 </button>
 
 
 
-<button>
-🧠 Practice Topics
-</button>
 
-
-
-<button>
-📈 Interview History
-</button>
-
-
-
-<button>
-🤖 AI Feedback
-</button>
-
-
-
-<button>
-🏆 Leaderboard
+<button
+onClick={()=>navigate("/history")}
+>
+🕘 Interview History
 </button>
 
 
 
 
-<button onClick={()=>navigate("/settings")}>
+
+<button
+onClick={()=>navigate("/settings")}
+>
 ⚙ Settings
 </button>
 
 
 
 
-<div className="userCard">
 
+<div
+
+className="userCard"
+
+onClick={()=>navigate("/premium")}
+
+>
+
+
+<h3>
 👩 Deepika
+</h3>
 
-<br/>
 
+<p>
 ⭐ Premium Plan
+</p>
+
 
 </div>
 
 
 
 
-<button onClick={()=>navigate("/")}>
+
+
+<button
+
+onClick={()=>{
+
+localStorage.clear();
+
+navigate("/");
+
+}}
+
+>
+
 🚪 Logout
+
 </button>
+
 
 
 
@@ -88,5 +114,6 @@ return(
 
 
 )
+
 
 }

@@ -4,7 +4,7 @@ import {useState} from "react";
 export default function ResumeAnalyzer(){
 
 
-const[file,setFile]=useState(null);
+const [report,setReport]=useState(true);
 
 
 
@@ -12,65 +12,62 @@ return(
 
 <div className="resumePage">
 
+<div className="resumeHero">
+
 
 <h1>
-🤖 Resume Intelligence AI
+🤖 AI Resume Analyzer
 </h1>
 
 
-<div className="resumeUpload">
+<p>
+Upload resume and get AI career evaluation
+</p>
 
 
-<input
-
-type="file"
-
-onChange={(e)=>setFile(e.target.files[0])}
-
-/>
+<input type="file"/>
 
 
 <button>
-Analyze Resume
+Submit Resume
 </button>
 
 
-
 </div>
 
 
 
+{report &&
 
-<div className="resumeCards">
+<div className="resumeDashboard">
 
 
-<div>
+<div className="resumeCard">
+
+<h2>ATS Score</h2>
+
 <h1>92%</h1>
-ATS Score
+
 </div>
 
 
 
-<div>
+<div className="resumeCard">
+
+<h2>Communication</h2>
+
 <h1>88%</h1>
-Skills Match
+
 </div>
 
 
 
-<div>
-<h1>90%</h1>
-Experience
-</div>
 
+<div className="resumeCard">
 
+<h2>Technical Skills</h2>
 
-<div>
-<h1>85%</h1>
-Projects
-</div>
-
-
+<h1>95%</h1>
 
 </div>
 
@@ -78,56 +75,44 @@ Projects
 
 
 
-<div className="analysisPanel">
+<div className="resumeCard">
+
+<h2>Soft Skills</h2>
+
+<h1>86%</h1>
+
+</div>
+
+
+
+
+
+<div className="resumeLarge">
 
 
 <h2>
-AI Resume Report
+📄 Resume Report
 </h2>
 
 
-
 <p>
-✅ Programming skills detected
+✔ Strong programming skills detected
 </p>
 
 
 <p>
-✅ Projects evaluated
+✔ Good project explanation
 </p>
 
 
 <p>
-✅ Education checked
+⚡ Improve achievements section
 </p>
 
 
 <p>
-✅ Keywords matched
+⚡ Add more measurable results
 </p>
-
-
-<p>
-✅ Job roles suggested
-</p>
-
-
-
-
-<h2>
-Improvement Suggestions
-</h2>
-
-
-<ul>
-
-<li>Add measurable project results</li>
-
-<li>Improve professional summary</li>
-
-<li>Add more technical keywords</li>
-
-</ul>
 
 
 </div>
@@ -136,15 +121,37 @@ Improvement Suggestions
 
 
 
-{
+<div className="resumeLarge">
 
-file &&
 
-<h3>
-Uploaded: {file.name}
-</h3>
+<h2>
+🎯 Interview Preparation
+</h2>
+
+
+<p>
+Expected interview topics generated
+</p>
+
+
+<p>
+Role matching completed
+</p>
+
+
+<p>
+Confidence improvement suggestions ready
+</p>
+
+
+</div>
+
+
+
+</div>
 
 }
+
 
 
 </div>

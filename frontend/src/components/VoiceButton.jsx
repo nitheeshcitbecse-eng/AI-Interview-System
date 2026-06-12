@@ -1,118 +1,90 @@
-import {useEffect,useState} from "react";
+import {useState} from "react";
 
 
-export default function VoiceButton({onResult}){
+export default function VoiceButton(){
 
 
-const [active,setActive]=useState(false);
-
-const [recognition,setRecognition]=useState(null);
+const [text,setText]=useState("");
 
 
 
-useEffect(()=>{
+function speak(){
 
 
-const SpeechRecognition =
+let msg =
+new SpeechSynthesisUtterance(
+"Tell me about your recent project"
+);
+
+
+speechSynthesis.speak(msg);
+
+
+}
+
+
+
+function listen(){
+
+
+let SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
 
 
-if(!SpeechRecognition)
-return;
+let rec=new SpeechRecognition();
 
 
 
-const rec=new SpeechRecognition();
-
-
-rec.continuous=true;
-
-rec.interimResults=true;
+rec.start();
 
 
 
 rec.onresult=(e)=>{
 
 
-let text="";
-
-
-for(
-let i=e.resultIndex;
-i<e.results.length;
-i++
-){
-
-text+=e.results[i][0].transcript;
-
-}
-
-
-onResult(text);
+setText(
+e.results[0][0].transcript
+);
 
 
 }
 
 
-
-setRecognition(rec);
-
-
-
-},[]);
-
-
-
-
-
-function start(){
-
-
-if(active){
-
-recognition.stop();
-
-setActive(false);
-
-
 }
-
-else{
-
-
-recognition.start();
-
-setActive(true);
-
-
-}
-
-
-
-}
-
 
 
 
 return(
 
-<button onClick={start}>
+<div>
 
 
-{
-active
-?
-"🎤 Listening"
-:
-"🎤 Speak"
+<button onClick={speak}>
 
-}
-
+🤖 Ask Question
 
 </button>
 
+
+
+<button onClick={listen}>
+
+🎤 Answer
+
+</button>
+
+
+
+<p>
+
+{text}
+
+</p>
+
+
+</div>
 
 )
 

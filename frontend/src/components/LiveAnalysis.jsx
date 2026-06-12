@@ -3,59 +3,104 @@ export default function LiveAnalysis(){
 
 return(
 
-<div className="live">
+<div className="analysisBox">
 
 
-<h2>
-✨ Live Analysis
+<h2 className="analysisTitle">
+📊 Live AI Analysis
 </h2>
 
 
-<div className="stats">
+
+<div className="graphBox">
+
+
+<div className="performanceCircle">
+
+78%
+
+</div>
+
+
+<p>
+⚡ Performance Score
+</p>
+
+
+</div>
+
+
+
+
+<div className="analysisCard">
+
+<div className="analysisIcon">
+🎯
+</div>
+
+<div>
+
+<h3>Confidence</h3>
+
+<p>
+High confidence detected
+</p>
+
+</div>
+
+</div>
+
+
+
+
+<div className="analysisCard">
+
+
+<div className="analysisIcon">
+🗣️
+</div>
 
 
 <div>
-Confidence
-<h2>78%</h2>
+
+<h3>Communication</h3>
+
+<p>
+Good explanation ability
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div className="analysisCard">
+
+
+<div className="analysisIcon">
+⚡
 </div>
 
 
 <div>
-Clarity
-<h2>82%</h2>
-</div>
 
+<h3>Performance</h3>
 
-<div>
-Communication
-<h2>85%</h2>
-</div>
-
-
-<div>
-Technical
-<h2>75%</h2>
-</div>
-
-
-</div>
-
-
-
-<h3>
-Speech Insights
-</h3>
-
-
-<div className="graph">
-
-〰〰〰〰〰
+<p>
+AI tracking response quality
+</p>
 
 </div>
 
 
 </div>
 
+
+</div>
 
 )
 

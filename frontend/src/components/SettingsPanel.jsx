@@ -1,58 +1,88 @@
-const settings=[
+import { useState } from "react";
 
-"📡 Network & Connectivity",
 
-"Wi-Fi",
+export default function SettingsPanel(){
 
-"Bluetooth",
 
-"Mobile Network & SIM",
+const [open,setOpen] = useState("");
 
-"Airplane Mode",
 
-"Hotspot & Tethering",
 
-"🖥 Display & Audio",
+const settings = [
 
-"Brightness",
+{
+icon:"👤",
+title:"Profile",
+desc:"Name, Email, Password, Profile Picture"
+},
 
-"Light / Dark Mode",
 
-"Wallpaper",
+{
+icon:"🎥",
+title:"Camera",
+desc:"Webcam selection and preview"
+},
 
-"Font Size",
 
-"🔊 Sound",
+{
+icon:"🎤",
+title:"Microphone",
+desc:"Voice input settings"
+},
 
-"Volume",
 
-"Do Not Disturb",
+{
+icon:"🔊",
+title:"Speaker",
+desc:"Audio output test"
+},
 
-"🔐 Privacy & Security",
 
-"Accounts",
+{
+icon:"🎯",
+title:"Interview Preferences",
+desc:"Technical, Behavioral, Mixed"
+},
 
-"App Permissions",
 
-"App Lock",
+{
+icon:"⚡",
+title:"Difficulty",
+desc:"Easy Medium Hard"
+},
 
-"🔋 Battery",
 
-"Storage",
+{
+icon:"♿",
+title:"Accessibility",
+desc:"Captions and response timer"
+},
 
-"Date & Time",
 
-"Language",
+{
+icon:"🔒",
+title:"Privacy",
+desc:"Recording and data controls"
+},
 
-"Accessibility",
 
-"Developer Options"
+{
+icon:"🔔",
+title:"Notifications",
+desc:"Email and browser alerts"
+},
+
+
+{
+icon:"🎨",
+title:"Appearance",
+desc:"Dark / Light theme"
+}
 
 
 ];
 
 
-export default function SettingsPanel(){
 
 
 return(
@@ -61,31 +91,55 @@ return(
 
 
 <h1>
-⚙ Application Settings
+⚙ Mock Interview Settings
 </h1>
+
+
+
+<div className="settingsGrid">
 
 
 {
 
-
-settings.map((item,i)=>(
+settings.map((item,index)=>(
 
 
 <div
 
 className="settingItem"
 
-key={i}
+key={index}
+
+onClick={()=>setOpen(item.title)}
 
 >
 
 
-{item}
+<div>
+
+
+<h2>
+
+{item.icon} {item.title}
+
+</h2>
+
+
+<p>
+
+{item.desc}
+
+</p>
+
+
+</div>
+
 
 
 <span>
 ›
 </span>
+
 
 
 </div>
@@ -97,10 +151,44 @@ key={i}
 }
 
 
+</div>
 
-<button className="logout">
-Logout
-</button>
+
+
+
+{
+
+open &&
+
+
+<div className="settingDetail">
+
+
+<h2>
+
+{open}
+
+</h2>
+
+
+<p>
+Configure your {open} settings here.
+</p>
+
+
+<label>
+
+Enable
+
+<input type="checkbox"/>
+
+</label>
+
+
+</div>
+
+
+}
 
 
 
@@ -108,5 +196,6 @@ Logout
 
 
 )
+
 
 }

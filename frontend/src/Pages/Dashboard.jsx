@@ -1,38 +1,59 @@
 import Sidebar from "../components/Sidebar";
 import AIAvatar from "../components/AIAvatar";
-import ChatWindow from "../components/ChatWindow";
 import LiveAnalysis from "../components/LiveAnalysis";
-import FeatureCard from "../components/FeatureCard";
+import {useState} from "react";
+import "../App.css";
 
 
 export default function Dashboard(){
 
+
+const [page,setPage] = useState("home");
+
+
+const userName =
+localStorage.getItem("userName") || "User";
+
+
+
 return(
+
 
 <div className="appLayout">
 
 
-<Sidebar/>
+<Sidebar 
+setPage={setPage}
+/>
+
 
 
 <div className="dashboard">
 
 
+
 <div className="topBar">
 
-<h3>
-🔴 Live Interview
-</h3>
+
+<h2>
+🤖 AI Interview System
+</h2>
 
 
 <div className="profile">
-👩 Deepika ▾
-</div>
+
+👤 {userName}
 
 </div>
 
 
+</div>
 
+
+
+
+
+{page==="home" &&
 
 <div className="interviewGrid">
 
@@ -41,28 +62,41 @@ return(
 <div className="robotBox">
 
 
-<AIAvatar/>
+<AIAvatar />
 
 
-<div className="wave">
-
-〰〰🎤〰〰
-
-</div>
+<h2>
+Hi {userName}
+</h2>
 
 
-<ChatWindow/>
+<p>
+I am your AI Interviewer. Tell me about yourself.
+</p>
+
+
+
+<div className="controls">
+
+
+<button className="speakBtn">
+
+🎤 Speak
+
+</button>
 
 
 <button className="endBtn">
 
-End Interview
+⛔ End Interview
 
 </button>
 
 
 </div>
 
+
+</div>
 
 
 
@@ -70,68 +104,57 @@ End Interview
 <div className="progressBox">
 
 
-<h3>
-Interview Progress
-</h3>
+<h2>
+📈 Interview Progress
+</h2>
 
 
-<div className="timer">
 
-12:45
+<div className="progressCircle">
 
-<span>
-/30:00
-</span>
+75%
 
 </div>
 
 
 
-<ul>
-
-<li>🟢 Introduction</li>
-
-<li>🔵 Technical Q&A</li>
-
-<li>Problem Solving</li>
-
-<li>Behavioral</li>
-
-<li>Wrap Up</li>
-
-</ul>
+<div className="progressBars">
 
 
+<div>
+<span>Introduction</span>
+<div className="bar">
+<div className="fill one"></div>
+</div>
+</div>
+
+
+
+<div>
+<span>Technical Round</span>
+<div className="bar">
+<div className="fill two"></div>
+</div>
 </div>
 
 
 
 
-<div className="analysisBox">
-
-
-<LiveAnalysis/>
-
-
-<div className="question">
-
-<h3>
-Current Question
-</h3>
-
-
-<p>
-What is the difference between supervised and unsupervised learning?
-</p>
-
-
-<button>
-💡 Hint
-</button>
-
-
+<div>
+<span>Communication</span>
+<div className="bar">
+<div className="fill three"></div>
+</div>
 </div>
 
+
+
+<div>
+<span>Final Feedback</span>
+<div className="bar">
+<div className="fill four"></div>
+</div>
+</div>
 
 
 </div>
@@ -144,39 +167,30 @@ What is the difference between supervised and unsupervised learning?
 
 
 
-<div className="bottomGrid">
-
-
-<FeatureCard
-icon="📄"
-title="Resume Analyzer"
-description="AI resume scoring and suggestions"
-/>
-
-
-<FeatureCard
-icon="📊"
-title="Interview Report"
-description="Complete performance report"
-/>
-
-
-<FeatureCard
-icon="🧠"
-title="Practice Topics"
-description="AI generated questions"
-/>
-
-
-<FeatureCard
-icon="⚙️"
-title="Settings"
-description="Customize your AI"
-/>
+<LiveAnalysis />
 
 
 
 </div>
+
+
+}
+
+
+
+
+
+{page==="premium" &&
+
+<div>
+
+<h1>
+Premium Plan
+</h1>
+
+</div>
+
+}
 
 
 
@@ -184,6 +198,7 @@ description="Customize your AI"
 
 
 </div>
+
 
 )
 

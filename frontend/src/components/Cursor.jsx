@@ -1,23 +1,61 @@
-import { useEffect } from "react";
+import {useEffect,useState} from "react";
 
-export default function Cursor() {
-  useEffect(() => {
-    const cursor = document.createElement("div");
-    cursor.className = "custom-cursor";
-    document.body.appendChild(cursor);
 
-    const move = (e) => {
-      cursor.style.left = e.clientX + "px";
-      cursor.style.top = e.clientY + "px";
-    };
+export default function Cursor(){
 
-    window.addEventListener("mousemove", move);
 
-    return () => {
-      window.removeEventListener("mousemove", move);
-      cursor.remove();
-    };
-  }, []);
+const [mouse,setMouse]=useState({
+x:0,
+y:0
+});
 
-  return null;
+
+useEffect(()=>{
+
+
+const move=(e)=>{
+
+setMouse({
+x:e.clientX,
+y:e.clientY
+})
+
+}
+
+
+window.addEventListener(
+"mousemove",
+move
+);
+
+
+return()=>window.removeEventListener(
+"mousemove",
+move
+)
+
+
+},[]);
+
+
+
+return(
+
+<>
+
+
+<div
+className="bigCursor"
+style={{
+left:mouse.x,
+top:mouse.y
+}}
+/>
+
+
+
+</>
+
+)
+
 }

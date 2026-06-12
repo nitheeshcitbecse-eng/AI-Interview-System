@@ -1,13 +1,35 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {motion} from "framer-motion";
+import "../App.css";
 
 
 export default function Login(){
 
-const nav=useNavigate();
 
-const [mode,setMode]=useState("login");
+const navigate = useNavigate();
+
+
+const [username,setUsername] = useState("");
+const [password,setPassword] = useState("");
+
+
+
+const handleLogin=(e)=>{
+
+e.preventDefault();
+
+localStorage.setItem(
+"userName",
+username
+);
+
+
+
+navigate("/dashboard");
+
+}
+
+
 
 
 return(
@@ -15,164 +37,139 @@ return(
 <div className="loginPage">
 
 
-<div className="particles">
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-</div>
+
+<div className="robotSection">
 
 
-
-<motion.div
-
-className="robotSection"
-
-initial={{x:-100,opacity:0}}
-
-animate={{x:0,opacity:1}}
-
->
-
-
-<img
+<img 
 src="/src/assets/hero.png"
-className="bigRobot"
+alt="AI Robot"
 />
 
 
 <h1>
-AI INTERVIEWER
+AI Interviewer
 </h1>
 
-
-<p>
-Your personal robotic interview assistant
-</p>
 
 
 <div className="loginFeatures">
 
-<div>🤖 AI Voice</div>
-<div>📊 Live Analysis</div>
-<div>📄 Resume AI</div>
-<div>⚡ Smart Feedback</div>
+
+<div>
+🤖
+AI Interview
+</div>
+
+
+<div>
+🎤
+Voice Interaction
+</div>
+
+
+<div>
+📊
+Live Analysis
+</div>
+
+
+<div>
+📄
+Resume AI
+</div>
+
+
+
+</div>
 
 
 </div>
 
 
 
-</motion.div>
 
 
-
-
-
-<motion.div
-
+<form 
 className="loginCard"
-
-initial={{scale:.5,opacity:0}}
-
-animate={{scale:1,opacity:1}}
-
+onSubmit={handleLogin}
 >
 
 
-<h1>
 
-{
-mode==="login"
-?
-"Welcome Back"
-:
-mode==="signup"
-?
-"Create Account"
-:
-"Reset Password"
-}
-
-</h1>
+<h2>
+Welcome Back
+</h2>
 
 
-
-{
-mode!=="forgot" &&
-
-<input placeholder="Username"/>
-
-}
-
-
-
-<input placeholder="Email"/>
-
-
-
-{
-mode!=="forgot" &&
 
 <input
-type="password"
-placeholder="Password"
+
+type="text"
+
+placeholder="Username"
+
+value={username}
+
+onChange={(e)=>setUsername(e.target.value)}
+
+required
+
 />
 
-}
 
 
 
-<button
 
-onClick={()=>nav("/dashboard")}
+<input
 
->
+type="password"
 
-{
-mode==="login"
-?
-"LOGIN 🚀"
-:
-mode==="signup"
-?
-"SIGN UP"
-:
-"SEND RESET LINK"
+placeholder="Password"
 
-}
+value={password}
+
+onChange={(e)=>setPassword(e.target.value)}
+
+required
+
+/>
+
+
+
+
+
+<button type="submit">
+
+Login
 
 </button>
+
 
 
 
 <div className="loginLinks">
 
 
-<p onClick={()=>setMode("login")}>
-Login
-</p>
+<span>
+Forgot Password?
+</span>
 
 
-<p onClick={()=>setMode("signup")}>
-Signup
-</p>
-
-
-<p onClick={()=>setMode("forgot")}>
-Forgot Password
-</p>
+<span>
+Sign Up
+</span>
 
 
 </div>
 
 
-</motion.div>
+
+</form>
 
 
 
 </div>
-
 
 )
 
