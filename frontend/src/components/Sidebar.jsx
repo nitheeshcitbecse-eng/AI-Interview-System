@@ -1,39 +1,91 @@
-export default function Sidebar({setPage}){
+import {useNavigate} from "react-router-dom";
+
+
+export default function Sidebar(){
+
+const navigate = useNavigate();
 
 
 return(
 
-<div className="sidebar">
+<div className="side">
 
 
 <h2>
-🤖 AI Interview
+✦ AI Interviewer
 </h2>
 
 
-
-<button onClick={()=>setPage("dashboard")}>
-🏠 Dashboard
+<button onClick={()=>navigate("/dashboard")}>
+🏠 Home
 </button>
 
 
-<button onClick={()=>setPage("resume")}>
+<button>
+💬 Mock Interview
+</button>
+
+
+
+<button onClick={()=>navigate("/resume")}>
 📄 Resume Analyzer
 </button>
 
 
-<button onClick={()=>setPage("report")}>
-🏆 Report Card
+
+<button>
+🧠 Practice Topics
 </button>
 
 
-<button onClick={()=>setPage("settings")}>
+
+<button>
+📈 Interview History
+</button>
+
+
+
+<button>
+🤖 AI Feedback
+</button>
+
+
+
+<button>
+🏆 Leaderboard
+</button>
+
+
+
+
+<button onClick={()=>navigate("/settings")}>
 ⚙ Settings
 </button>
 
 
 
+
+<div className="userCard">
+
+👩 Deepika
+
+<br/>
+
+⭐ Premium Plan
+
 </div>
+
+
+
+
+<button onClick={()=>navigate("/")}>
+🚪 Logout
+</button>
+
+
+
+</div>
+
 
 )
 

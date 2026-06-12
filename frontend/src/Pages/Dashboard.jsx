@@ -1,96 +1,62 @@
-import {useState} from "react";
-
 import Sidebar from "../components/Sidebar";
 import AIAvatar from "../components/AIAvatar";
+import ChatWindow from "../components/ChatWindow";
 import LiveAnalysis from "../components/LiveAnalysis";
-import ResumeAnalyzer from "../components/ResumeAnalyzer";
-import ReportCard from "../components/ReportCard";
-import SettingsPanel from "../components/SettingsPanel";
-import BoostPanel from "../components/BoostPanel";
-
-import "../App.css";
+import FeatureCard from "../components/FeatureCard";
 
 
 export default function Dashboard(){
 
-
-const [page,setPage]=useState("dashboard");
-
-
-const [report,setReport]=useState({
-
-overall:0,
-communication:0,
-technical:0,
-confidence:0,
-clarity:0
-
-});
-
-
-
 return(
 
-<div className="app">
+<div className="appLayout">
+
+
+<Sidebar/>
+
+
+<div className="dashboard">
+
+
+<div className="topBar">
+
+<h3>
+🔴 Live Interview
+</h3>
+
+
+<div className="profile">
+👩 Deepika ▾
+</div>
+
+</div>
 
 
 
-<Sidebar setPage={setPage}/>
+
+<div className="interviewGrid">
 
 
 
-<div className="fullPage">
+<div className="robotBox">
 
 
-
-{
-
-page==="dashboard" &&
+<AIAvatar/>
 
 
-<div className="dashboardGrid">
+<div className="wave">
+
+〰〰🎤〰〰
+
+</div>
 
 
-
-<div className="leftArea">
-
+<ChatWindow/>
 
 
-<div className="interviewWrapper">
+<button className="endBtn">
 
-
-<AIAvatar
-
-setReport={setReport}
-
-/>
-
-
-
-<div className="bottomMini">
-
-
-
-<div className="miniCard">
-
-
-<h1>
-📄 Resume Analyzer
-</h1>
-
-
-<p>
-AI checks your resume strength and skills.
-</p>
-
-
-<button
-
-onClick={()=>setPage("resume")}
-
->
-
-Open Resume
+End Interview
 
 </button>
 
@@ -101,28 +67,66 @@ Open Resume
 
 
 
-<div className="miniCard">
+<div className="progressBox">
 
 
-<h1>
-⚙ Settings
-</h1>
+<h3>
+Interview Progress
+</h3>
+
+
+<div className="timer">
+
+12:45
+
+<span>
+/30:00
+</span>
+
+</div>
+
+
+
+<ul>
+
+<li>🟢 Introduction</li>
+
+<li>🔵 Technical Q&A</li>
+
+<li>Problem Solving</li>
+
+<li>Behavioral</li>
+
+<li>Wrap Up</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+<div className="analysisBox">
+
+
+<LiveAnalysis/>
+
+
+<div className="question">
+
+<h3>
+Current Question
+</h3>
 
 
 <p>
-Manage camera, mic and interview setup.
+What is the difference between supervised and unsupervised learning?
 </p>
 
 
-
-<button
-
-onClick={()=>setPage("settings")}
-
->
-
-Open Settings
-
+<button>
+💡 Hint
 </button>
 
 
@@ -137,71 +141,42 @@ Open Settings
 </div>
 
 
-</div>
 
 
 
+<div className="bottomGrid">
 
 
-<div className="rightArea">
+<FeatureCard
+icon="📄"
+title="Resume Analyzer"
+description="AI resume scoring and suggestions"
+/>
 
 
+<FeatureCard
+icon="📊"
+title="Interview Report"
+description="Complete performance report"
+/>
 
-<LiveAnalysis
 
-report={report}
+<FeatureCard
+icon="🧠"
+title="Practice Topics"
+description="AI generated questions"
+/>
 
+
+<FeatureCard
+icon="⚙️"
+title="Settings"
+description="Customize your AI"
 />
 
 
 
-
-<BoostPanel/>
-
-
-
 </div>
-
-
-
-</div>
-
-}
-
-
-
-
-
-{
-
-page==="resume" &&
-
-<ResumeAnalyzer/>
-
-}
-
-
-
-
-{
-
-page==="report" &&
-
-<ReportCard report={report}/>
-
-}
-
-
-
-
-{
-
-page==="settings" &&
-
-<SettingsPanel/>
-
-}
-
 
 
 

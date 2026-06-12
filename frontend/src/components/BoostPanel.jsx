@@ -3,63 +3,40 @@ export default function BoostPanel(){
 
 return(
 
-<div className="boostPanel">
+<div>
 
-
-<h1>
-🚀 AI Career Zone
-</h1>
-
-
-<div className="boostItem">
-
-🎯 Interview Progress
 
 <h2>
-Live Practice
+Interview Boost
 </h2>
 
-</div>
+
+<ul>
+
+<li>
+Resume Tips
+</li>
 
 
-
-<div className="boostItem">
-
-🧠 AI Tips
-
-<p>
-Use examples while answering questions
-</p>
-
-</div>
+<li>
+Communication Tips
+</li>
 
 
-
-<div className="boostItem">
-
-⭐ Skills Detected
-
-<p>
-Java • React • AI • Problem Solving
-</p>
-
-</div>
+<li>
+AI Practice Questions
+</li>
 
 
+<li>
+Coding Preparation
+</li>
 
-<div className="boostItem">
 
-🔥 Ready Level
-
-<h2>
-Placement Mode
-</h2>
-
-</div>
+</ul>
 
 
 </div>
-
 
 )
 
