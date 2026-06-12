@@ -75,7 +75,7 @@ onClick={()=>navigate("/premium")}
 
 
 <h3>
-👩 Deepika
+ 👩
 </h3>
 
 
