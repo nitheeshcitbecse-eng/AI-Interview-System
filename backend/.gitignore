@@ -1,0 +1,28 @@
+# Virtual environments (VERY IMPORTANT)
+ml_env/
+venv/
+env/
+backend/ml_env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# ML model files (optional - only if large)
+*.pkl
+*.pt
+*.h5
+
+# Logs
+*.log
